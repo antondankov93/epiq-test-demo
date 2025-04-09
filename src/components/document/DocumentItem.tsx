@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckCircle } from 'lucide-react';
 
 type DocumentItemProps = {
   id: string;
@@ -26,7 +27,7 @@ export const DocumentItem: React.FC<DocumentItemProps> = ({
     >
       {title}
       {hasAnnotations && (
-        <span className="ml-1 text-green-600">✓</span>
+        <CheckCircle size={16} className="ml-1 text-green-600 inline" />
       )}
     </li>
   );

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { FieldDefinition, Highlight } from '@/types/common';
+import { FieldDefinition, Highlight } from '../../utils/types';
 import { FieldHighlighter } from './FieldHighlighter';
-import { dynamicLists } from '@/utils/mockData';
+import { dynamicLists } from '../../utils/mockData';
+import { AlertTriangle, Info } from 'lucide-react';
 
 type FieldInputProps = {
   field: FieldDefinition;
@@ -43,8 +44,8 @@ export const FieldInput: React.FC<FieldInputProps> = ({
   const getFilteredOptions = (options: string[]): string[] => {
     const term = searchTerm.toLowerCase();
     if (!term) return options;
-    
-    return options.filter((option) => 
+
+    return options.filter((option) =>
       option.toLowerCase().includes(term)
     );
   };
@@ -54,7 +55,7 @@ export const FieldInput: React.FC<FieldInputProps> = ({
     if (!Array.isArray(type)) return [];
 
     const options: string[] = [];
-    
+
     type.forEach((item) => {
       if (typeof item === 'string') {
         if (item.startsWith('DYNAMIC_') && dynamicLists[item]) {
@@ -70,11 +71,11 @@ export const FieldInput: React.FC<FieldInputProps> = ({
 
   const renderInputField = () => {
     const { id, name, type } = field;
-    
+
     // Dropdown field with dynamic lists
     if (Array.isArray(type) && type.some(t => typeof t === 'string' && t.startsWith('DYNAMIC_'))) {
       const options = resolveDynamicListType(type);
-      
+
       return (
         <div className="relative">
           <input
@@ -108,7 +109,7 @@ export const FieldInput: React.FC<FieldInputProps> = ({
         </div>
       );
     }
-    
+
     // Regular dropdown for non-dynamic lists
     if (Array.isArray(type)) {
       return (
@@ -126,7 +127,7 @@ export const FieldInput: React.FC<FieldInputProps> = ({
         </select>
       );
     }
-    
+
     // Integer field
     if (type === 'integer' || type === 'Integer') {
       return (
@@ -138,21 +139,21 @@ export const FieldInput: React.FC<FieldInputProps> = ({
         />
       );
     }
-    
+
     // Custom type field
     if (typeof type === 'string' && onOpenCustomType) {
       return (
-        <div 
+        <div
           className="cursor-pointer"
           onClick={onOpenCustomType}
         >
           {value ? (
             <div className="p-2 border border-gray-300 rounded bg-gray-50">
-              {typeof value === 'object' ? 
+              {typeof value === 'object' ?
                 Object.entries(value)
                   .filter(([_, v]) => v)
                   .map(([k, v]) => `${k}: ${v}`)
-                  .join(', ') : 
+                  .join(', ') :
                 value
               }
             </div>
@@ -164,7 +165,7 @@ export const FieldInput: React.FC<FieldInputProps> = ({
         </div>
       );
     }
-    
+
     // Default: string field
     return (
       <input
@@ -203,14 +204,31 @@ export const FieldInput: React.FC<FieldInputProps> = ({
           )}
         </div>
       </div>
-      
-      {renderInputField()}
-      
-      {error && (
-        <div className="text-red-500 text-sm mt-1">
-          {error}
-        </div>
-      )}
+
+      <div className={`${error ? 'border-red-300 border rounded p-2 bg-red-50' : ''}`}>
+        {renderInputField()}
+
+        {error && (
+          <div className="flex items-center text-red-600 text-sm mt-2">
+            <AlertTriangle size={16} className="mr-1 flex-shrink-0" />
+            {error}
+          </div>
+        )}
+
+        {isRequired && !value && !error && (
+          <div className="flex items-center text-amber-600 text-xs mt-1">
+            <Info size={12} className="mr-1 flex-shrink-0" />
+            This field is required
+          </div>
+        )}
+
+        {value && highlights.length === 0 && !error && (
+          <div className="flex items-center text-amber-600 text-xs mt-1">
+            <Info size={12} className="mr-1 flex-shrink-0" />
+            Please highlight evidence for this field
+          </div>
+        )}
+      </div>
     </div>
   );
 };

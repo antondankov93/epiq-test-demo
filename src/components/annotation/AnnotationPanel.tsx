@@ -1,9 +1,10 @@
 import React from 'react';
-import { KnowledgeUnitSchema, KnowledgeUnit as KnowledgeUnitType, Highlight } from '@/types/common';
+import { KnowledgeUnitSchema, KnowledgeUnit as KnowledgeUnitType, Highlight } from '../../utils/types';
 import { KnowledgeUnit } from './KnowledgeUnit';
 import { KnowledgeUnitDropdown } from './KnowledgeUnitDropdown';
-import { useKnowledgeUnits } from '@/hooks';
-import { getFieldColor } from '@/utils/colorUtils';
+import { useKnowledgeUnits } from '../../hooks';
+import { getFieldColor } from '../../utils/colorUtils';
+import { PlusCircle } from 'lucide-react';
 
 type AnnotationPanelProps = {
   documentId: string | null;
@@ -41,9 +42,10 @@ export const AnnotationPanel: React.FC<AnnotationPanelProps> = ({
         <>
           <div className="relative mb-4">
             <button
-              className="w-full py-2 px-4 bg-green-500 text-white rounded font-bold hover:bg-green-600 transition-colors"
+              className="w-full py-2 px-4 bg-green-500 text-white rounded font-bold hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
               onClick={() => setShowKuDropdown(!showKuDropdown)}
             >
+              <PlusCircle size={18} />
               Add Knowledge Unit
             </button>
 

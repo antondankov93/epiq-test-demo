@@ -1,5 +1,6 @@
 import React from 'react';
-import { KnowledgeUnitSchema } from '@/types/common';
+import { KnowledgeUnitSchema } from '../../utils/types';
+import { FileText } from 'lucide-react';
 
 type KnowledgeUnitDropdownProps = {
   schemas: KnowledgeUnitSchema[];
@@ -19,9 +20,10 @@ export const KnowledgeUnitDropdown: React.FC<KnowledgeUnitDropdownProps> = ({
       {schemas.map((schema) => (
         <div
           key={schema["Frame ID"]}
-          className="p-2 cursor-pointer hover:bg-gray-100"
+          className="p-2 cursor-pointer hover:bg-gray-100 flex items-center gap-2"
           onClick={() => onSelect(schema["Frame ID"])}
         >
+          <FileText size={16} className="text-gray-500" />
           {schema["Frame Label"]}
         </div>
       ))}

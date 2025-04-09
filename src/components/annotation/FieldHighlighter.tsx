@@ -1,5 +1,6 @@
-import React from 'react';
-import { Highlight } from '@/types/common';
+import React, { useState } from 'react';
+import { Highlight } from '../../utils/types';
+import {Paintbrush, Check, X, Highlighter} from 'lucide-react';
 
 type FieldHighlighterProps = {
   fieldId: string;
@@ -20,39 +21,53 @@ export const FieldHighlighter: React.FC<FieldHighlighterProps> = ({
   onToggleHighlighting,
   onClearHighlights,
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const hasHighlights = highlights.length > 0;
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1 items-center">
       <button
         type="button"
         className={`
-          w-6 h-6 border rounded
-          ${isActive ? 'border-black' : 'border-gray-300'}
-          transition-colors
+          w-6 h-6 border rounded flex items-center justify-center
+          ${isActive ? 'border-black shadow-sm' : 'border-gray-300'}
+          ${hasHighlights ? 'bg-opacity-100' : 'bg-opacity-20'}
+          transition-all duration-200 hover:shadow-sm
         `}
         style={{
           backgroundColor: hasHighlights ? color : 'transparent',
-          borderColor: color,
+          borderColor: hasHighlights ? color : '#ccc',
         }}
         onClick={() => onToggleHighlighting(fieldId, kuId)}
-        title={isActive ? 'Cancel highlighting' : 'Highlight evidence in document'}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        title={isActive ? 'Cancel highlighting mode' : 'Highlight evidence in document'}
+        aria-pressed={isActive}
+        aria-label="Toggle highlighting mode"
       >
-        <span role="img" aria-label="Highlight" className="text-xs">
-          🖌️
-        </span>
+        {isActive ? (
+          <Check size={14} className="text-black" />
+        ) : (
+          <Highlighter size={14} className="text-gray-700" />
+        )}
       </button>
+
       {hasHighlights && (
         <button
           type="button"
-          className="text-red-500 text-xs"
+          className="text-red-500 text-xs hover:text-red-700 transition-colors"
           onClick={() => onClearHighlights(fieldId, kuId)}
-          title="Clear highlights"
+          title="Clear all highlights for this field"
+          aria-label="Clear highlights"
         >
-          <span role="img" aria-label="Clear">
-            ❌
-          </span>
+          <X size={14} />
         </button>
+      )}
+
+      {hasHighlights && (
+        <span className="text-xs text-gray-500 ml-1">
+          {highlights.length} {highlights.length === 1 ? 'highlight' : 'highlights'}
+        </span>
       )}
     </div>
   );

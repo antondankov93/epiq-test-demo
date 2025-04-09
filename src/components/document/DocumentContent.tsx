@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { Highlight } from '@/types/common';
+import React, { useRef, useEffect, useState } from 'react';
+import { Highlight } from '../../utils/types';
+import { Paintbrush } from 'lucide-react';
 
 type DocumentContentProps = {
   content: string;
@@ -41,10 +42,10 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
         const after = contentHtml.substring(highlight.endOffset);
 
         const isActive = activeHighlightIds.includes(highlight.id);
-        
-        contentRef.current.innerHTML = `${before}<span 
-          class="highlight rounded ${isActive ? 'opacity-100' : 'opacity-30'} cursor-pointer transition-opacity" 
-          style="background-color: ${highlight.color};" 
+
+        contentRef.current.innerHTML = `${before}<span
+          class="highlight rounded ${isActive ? 'opacity-100' : 'opacity-30'} cursor-pointer transition-opacity"
+          style="background-color: ${highlight.color};"
           data-highlight-id="${highlight.id}"
         >${highlighted}</span>${after}`;
       }
@@ -74,7 +75,7 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
     const range = selection.getRangeAt(0);
     const startOffset = getTextOffset(contentRef.current!, range.startContainer, range.startOffset);
     const endOffset = getTextOffset(contentRef.current!, range.endContainer, range.endOffset);
-    
+
     if (startOffset >= 0 && endOffset > startOffset) {
       onTextSelect({
         text: selection.toString(),
@@ -104,13 +105,22 @@ export const DocumentContent: React.FC<DocumentContentProps> = ({
     return -1;
   };
 
+  // Apply cursor style based on highlighting mode
+  const cursorStyle = isHighlightingActive ? 'cursor-crosshair' : 'cursor-text';
+
   return (
     <div
       ref={contentRef}
-      className="whitespace-pre-wrap leading-relaxed font-mono"
+      className={`whitespace-pre-wrap leading-relaxed font-mono ${cursorStyle} ${isHighlightingActive ? 'bg-gray-50' : ''}`}
       onMouseUp={handleMouseUp}
     >
       {content}
+      {isHighlightingActive && (
+        <div className="fixed bottom-4 right-4 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg shadow-md flex items-center gap-2">
+          <Paintbrush size={16} />
+          Highlighting Mode: Select text to highlight
+        </div>
+      )}
     </div>
   );
 };

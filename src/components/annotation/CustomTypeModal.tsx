@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CustomTypeDefinition, FieldDefinition } from '@/types/common';
+import { CustomTypeDefinition, FieldDefinition } from '../../utils/types';
+import { X, Save, AlertTriangle } from 'lucide-react';
 
 type CustomTypeModalProps = {
   customType: CustomTypeDefinition;
@@ -35,7 +36,7 @@ export const CustomTypeModal: React.FC<CustomTypeModalProps> = ({
 
   const handleSubmit = () => {
     // Validate that at least one field has a value
-    const hasValue = Object.values(values).some((value) => 
+    const hasValue = Object.values(values).some((value) =>
       value !== undefined && value !== null && value !== ''
     );
 
@@ -51,7 +52,7 @@ export const CustomTypeModal: React.FC<CustomTypeModalProps> = ({
 
   const renderField = (field: FieldDefinition) => {
     const { id, name, type } = field;
-    
+
     if (Array.isArray(type)) {
       // Dropdown field
       return (
@@ -114,35 +115,39 @@ export const CustomTypeModal: React.FC<CustomTypeModalProps> = ({
       <div className="bg-white rounded-lg w-96 max-w-[90%] max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
           <h3 className="text-lg font-bold">{customType["Type Label"]}</h3>
-          <button 
-            className="text-2xl text-gray-500 hover:text-gray-700"
+          <button
+            className="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100"
             onClick={onCancel}
+            aria-label="Close modal"
           >
-            &times;
+            <X size={20} />
           </button>
         </div>
-        
+
         <div className="p-4">
           {customType.Fields.map(renderField)}
-          
+
           {errors.form && (
-            <div className="text-red-500 text-sm p-2 bg-red-50 rounded">
+            <div className="text-red-500 text-sm p-2 bg-red-50 rounded flex items-center gap-2">
+              <AlertTriangle size={16} />
               {errors.form}
             </div>
           )}
         </div>
-        
+
         <div className="flex justify-end p-4 border-t border-gray-200">
-          <button 
-            className="px-4 py-2 bg-gray-200 rounded mr-2"
+          <button
+            className="px-4 py-2 bg-gray-200 rounded mr-2 flex items-center gap-1 hover:bg-gray-300 transition-colors"
             onClick={onCancel}
           >
+            <X size={16} />
             Cancel
           </button>
-          <button 
-            className="px-4 py-2 bg-green-500 text-white rounded"
+          <button
+            className="px-4 py-2 bg-green-500 text-white rounded flex items-center gap-1 hover:bg-green-600 transition-colors"
             onClick={handleSubmit}
           >
+            <Save size={16} />
             Save
           </button>
         </div>
