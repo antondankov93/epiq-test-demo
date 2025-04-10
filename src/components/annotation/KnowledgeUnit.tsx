@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { KnowledgeUnitSchema, KnowledgeUnit as KnowledgeUnitType, FieldDefinition, Highlight, FieldValue } from '../../utils/types';
+import {FC, useState} from 'react';
+import { KnowledgeUnitSchema, KnowledgeUnit as KnowledgeUnitType, FieldDefinition, Highlight, FieldValue } from '@/types/common';
 import { FieldInput } from './FieldInput';
 import { CustomTypeModal } from './CustomTypeModal';
-import { customTypes } from '../../utils/mockData';
-import { Trash2, CheckCircle, AlertTriangle, Plus } from 'lucide-react';
+import { customTypes } from '@/utils/mockData';
+import { Trash2, AlertTriangle, Plus } from 'lucide-react';
 
 type KnowledgeUnitProps = {
   schema: KnowledgeUnitSchema;
@@ -16,7 +16,7 @@ type KnowledgeUnitProps = {
   getFieldColor: (fieldId: string) => string;
 }
 
-export const KnowledgeUnit: React.FC<KnowledgeUnitProps> = ({
+export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
   schema,
   knowledgeUnit,
   onUpdate,

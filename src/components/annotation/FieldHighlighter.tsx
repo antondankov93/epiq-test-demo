@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Highlight } from '../../utils/types';
-import {Paintbrush, Check, X, Highlighter} from 'lucide-react';
+import {FC, useState} from 'react';
+import {Check, X, Highlighter} from 'lucide-react';
+import { Highlight } from '@/types/common';
 
 type FieldHighlighterProps = {
   fieldId: string;
@@ -12,7 +12,7 @@ type FieldHighlighterProps = {
   onClearHighlights: (fieldId: string, kuId: string) => void;
 }
 
-export const FieldHighlighter: React.FC<FieldHighlighterProps> = ({
+export const FieldHighlighter: FC<FieldHighlighterProps> = ({
   fieldId,
   kuId,
   highlights,

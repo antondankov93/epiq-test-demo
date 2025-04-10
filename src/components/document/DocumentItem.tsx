@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 import { CheckCircle } from 'lucide-react';
 
 type DocumentItemProps = {
@@ -9,7 +9,7 @@ type DocumentItemProps = {
   onSelect: (id: string) => void;
 }
 
-export const DocumentItem: React.FC<DocumentItemProps> = ({
+export const DocumentItem: FC<DocumentItemProps> = ({
   id,
   title,
   hasAnnotations,

@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Highlight } from '../../utils/types';
+import {useRef, useEffect, FC} from 'react';
 import { Paintbrush } from 'lucide-react';
+import { Highlight } from '@/types/common';
 
 type DocumentContentProps = {
   content: string;
@@ -11,7 +11,7 @@ type DocumentContentProps = {
   isHighlightingActive: boolean;
 }
 
-export const DocumentContent: React.FC<DocumentContentProps> = ({
+export const DocumentContent: FC<DocumentContentProps> = ({
   content,
   highlights,
   activeHighlightIds,

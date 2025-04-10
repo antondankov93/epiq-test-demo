@@ -1,5 +1,6 @@
-import { DocumentList, DocumentViewer } from './components/document';
-import { AnnotationPanel } from './components/annotation';
+import { DocumentList } from '@/components/document/DocumentList';
+import { DocumentViewer } from '@/components/document/DocumentViewer';
+import { AnnotationPanel } from '@/components/annotation/AnnotationPanel';
 import { documents, knowledgeUnitSchemas } from './utils/mockData';
 import { useDocuments, useHighlighting } from './hooks';
 import './App.css';

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { CustomTypeDefinition, FieldDefinition } from '../../utils/types';
+import {FC, useState} from 'react';
 import { X, Save, AlertTriangle } from 'lucide-react';
+import { CustomTypeDefinition, FieldDefinition } from '@/types/common';
 
 type CustomTypeModalProps = {
   customType: CustomTypeDefinition;
@@ -9,7 +9,7 @@ type CustomTypeModalProps = {
   onCancel: () => void;
 }
 
-export const CustomTypeModal: React.FC<CustomTypeModalProps> = ({
+export const CustomTypeModal: FC<CustomTypeModalProps> = ({
   customType,
   initialValues = {},
   onSave,

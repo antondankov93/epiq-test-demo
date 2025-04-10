@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { FieldDefinition, Highlight } from '../../utils/types';
-import { FieldHighlighter } from './FieldHighlighter';
-import { dynamicLists } from '../../utils/mockData';
+import {FC, useState} from 'react';
 import { AlertTriangle, Info } from 'lucide-react';
+import { FieldDefinition, Highlight } from '@/types/common';
+import { FieldHighlighter } from './FieldHighlighter';
+import { dynamicLists } from '@/utils/mockData';
 
 type FieldInputProps = {
   field: FieldDefinition;
@@ -21,7 +21,7 @@ type FieldInputProps = {
   onOpenCustomType?: () => void;
 }
 
-export const FieldInput: React.FC<FieldInputProps> = ({
+export const FieldInput: FC<FieldInputProps> = ({
   field,
   value,
   highlights,

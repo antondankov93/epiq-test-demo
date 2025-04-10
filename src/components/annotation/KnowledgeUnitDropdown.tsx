@@ -1,6 +1,6 @@
-import React from 'react';
-import { KnowledgeUnitSchema } from '../../utils/types';
+import {FC} from 'react';
 import { FileText } from 'lucide-react';
+import { KnowledgeUnitSchema } from '@/types/common';
 
 type KnowledgeUnitDropdownProps = {
   schemas: KnowledgeUnitSchema[];
@@ -8,7 +8,7 @@ type KnowledgeUnitDropdownProps = {
   isOpen: boolean;
 }
 
-export const KnowledgeUnitDropdown: React.FC<KnowledgeUnitDropdownProps> = ({
+export const KnowledgeUnitDropdown: FC<KnowledgeUnitDropdownProps> = ({
   schemas,
   onSelect,
   isOpen,

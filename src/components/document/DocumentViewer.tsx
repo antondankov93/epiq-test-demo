@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 import { Document, Highlight } from '@/types/common';
 import { DocumentContent } from './DocumentContent';
 
@@ -11,7 +11,7 @@ type DocumentViewerProps = {
   isHighlightingActive: boolean;
 }
 
-export const DocumentViewer: React.FC<DocumentViewerProps> = ({
+export const DocumentViewer: FC<DocumentViewerProps> = ({
   document,
   highlights,
   activeHighlightIds,

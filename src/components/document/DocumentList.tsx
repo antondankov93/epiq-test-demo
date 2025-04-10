@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC} from 'react';
 import { Document } from '@/types/common';
 import { DocumentItem } from './DocumentItem';
 
@@ -8,7 +8,7 @@ type DocumentListProps = {
   onSelectDocument: (documentId: string) => void;
 }
 
-export const DocumentList: React.FC<DocumentListProps> = ({
+export const DocumentList: FC<DocumentListProps> = ({
   documents,
   selectedDocumentId,
   onSelectDocument,

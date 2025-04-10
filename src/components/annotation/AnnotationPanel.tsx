@@ -1,9 +1,9 @@
-import React from 'react';
-import { KnowledgeUnitSchema, KnowledgeUnit as KnowledgeUnitType, Highlight } from '../../utils/types';
+import {FC} from 'react';
+import { KnowledgeUnitSchema, KnowledgeUnit as KnowledgeUnitType, Highlight } from '@/types/common';
 import { KnowledgeUnit } from './KnowledgeUnit';
 import { KnowledgeUnitDropdown } from './KnowledgeUnitDropdown';
-import { useKnowledgeUnits } from '../../hooks';
-import { getFieldColor } from '../../utils/colorUtils';
+import { useKnowledgeUnits } from '@/hooks';
+import { getFieldColor } from '@/utils/colorUtils';
 import { PlusCircle } from 'lucide-react';
 
 type AnnotationPanelProps = {
@@ -16,7 +16,7 @@ type AnnotationPanelProps = {
   onAddHighlight: (highlight: Omit<Highlight, 'id' | 'color'>) => void;
 }
 
-export const AnnotationPanel: React.FC<AnnotationPanelProps> = ({
+export const AnnotationPanel: FC<AnnotationPanelProps> = ({
   documentId,
   knowledgeUnitSchemas,
   knowledgeUnits,
