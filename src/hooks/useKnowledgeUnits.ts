@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { KnowledgeUnit, KnowledgeUnitSchema } from '../types';
+import { KnowledgeUnit, KnowledgeUnitSchema } from '@/types/common';
 
 export const useKnowledgeUnits = (
   initialKnowledgeUnits: KnowledgeUnit[],
@@ -8,7 +8,6 @@ export const useKnowledgeUnits = (
 ) => {
   const [showKuDropdown, setShowKuDropdown] = useState(false);
 
-  // Add a new knowledge unit
   const addKnowledgeUnit = (schemaId: string) => {
     const schema = schemas.find((s) => s["Frame ID"] === schemaId);
     if (!schema) return;
@@ -23,7 +22,6 @@ export const useKnowledgeUnits = (
     setShowKuDropdown(false);
   };
 
-  // Update a knowledge unit
   const updateKnowledgeUnit = (updatedKU: KnowledgeUnit) => {
     const updatedKUs = initialKnowledgeUnits.map((ku) =>
       ku.id === updatedKU.id ? updatedKU : ku
@@ -32,7 +30,6 @@ export const useKnowledgeUnits = (
     onUpdateKnowledgeUnits(updatedKUs);
   };
 
-  // Remove a knowledge unit
   const removeKnowledgeUnit = (kuId: string) => {
     const updatedKUs = initialKnowledgeUnits.filter((ku) => ku.id !== kuId);
     onUpdateKnowledgeUnits(updatedKUs);

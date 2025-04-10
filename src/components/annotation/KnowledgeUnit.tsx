@@ -6,6 +6,11 @@ import {
   FieldDefinition,
   Highlight,
   FieldValue,
+  ActiveHighlightingField,
+  HighlightData,
+  CustomTypeModalField,
+  FieldValueType,
+  CustomTypeValue
 } from '@/types/common';
 import { FieldInput } from './FieldInput';
 import { CustomTypeModal } from './CustomTypeModal';
@@ -17,8 +22,8 @@ type KnowledgeUnitProps = {
   onUpdate: (updatedKU: KnowledgeUnitType) => void;
   onRemove: (kuId: string) => void;
   onToggleHighlighting: (fieldId: string, kuId: string) => void;
-  activeHighlightingField: { fieldId: string; kuId: string } | null;
-  onAddHighlight: (highlight: Omit<Highlight, 'id' | 'color'>) => void;
+  activeHighlightingField: ActiveHighlightingField;
+  onAddHighlight: (highlight: HighlightData) => void;
   getFieldColor: (fieldId: string) => string;
 }
 
@@ -33,7 +38,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
 }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showingOptionalFields, setShowingOptionalFields] = useState<string[]>([]);
-  const [customTypeModalField, setCustomTypeModalField] = useState<{ fieldId: string; customTypeId: string } | null>(null);
+  const [customTypeModalField, setCustomTypeModalField] = useState<CustomTypeModalField | null>(null);
 
   const getFieldValue = (fieldId: string): FieldValue | undefined => {
     return knowledgeUnit.fields.find((field) => field.fieldId === fieldId);
@@ -43,7 +48,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
     return getFieldValue(fieldId)?.highlights || [];
   };
 
-  const updateFieldValue = (fieldId: string, value: any) => {
+  const updateFieldValue = (fieldId: string, value: FieldValueType) => {
     const existingFieldIndex = knowledgeUnit.fields.findIndex(
       (field) => field.fieldId === fieldId
     );
@@ -112,7 +117,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
     });
   };
 
-  const handleCustomTypeSave = (values: Record<string, any>) => {
+  const handleCustomTypeSave = (values: CustomTypeValue) => {
     if (!customTypeModalField) return;
 
     updateFieldValue(customTypeModalField.fieldId, values);
@@ -204,13 +209,13 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
   };
 
   return (
-    <div className="bg-white rounded p-4 mb-4 shadow-sm">
-      <div className="flex justify-between items-center mb-3 pb-2 border-b border-gray-200">
-        <div className="font-bold text-lg">{schema["Frame Label"]}</div>
+    <div className="mb-4 rounded bg-white p-4 shadow-sm">
+      <div className="mb-3 flex items-center justify-between border-b border-gray-200 pb-2">
+        <div className="text-lg font-bold">{schema['Frame Label']}</div>
         <div className="flex gap-2">
           <button
             type="button"
-            className="text-red-500 border-none bg-transparent cursor-pointer flex items-center gap-1"
+            className="flex cursor-pointer items-center gap-1 border-none bg-transparent text-red-500"
             onClick={() => onRemove(knowledgeUnit.id)}
           >
             <Trash2 size={14} />
@@ -220,14 +225,14 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
       </div>
 
       {Object.keys(errors).length > 0 && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700">
-          <p className="font-bold mb-1 flex items-center gap-1">
+        <div className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-red-700">
+          <p className="mb-1 flex items-center gap-1 font-bold">
             <AlertTriangle size={16} />
             Please fix the following errors:
           </p>
           <ul className="list-disc pl-5">
             {Object.entries(errors).map(([fieldId, error]) => {
-              const fieldDef = schema.Fields.find(f => f.id === fieldId);
+              const fieldDef = schema.Fields.find((f) => f.id === fieldId);
               return (
                 <li key={fieldId}>
                   {fieldDef ? fieldDef.name : fieldId}: {error}
@@ -238,15 +243,14 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
         </div>
       )}
 
-      <div className="ku-fields">
-        {schema.Fields.map(renderField)}
-      </div>
+      <div className="ku-fields">{schema.Fields.map(renderField)}</div>
 
       {getAvailableOptionalFields().length > 0 && (
         <div className="mt-3">
           <button
             type="button"
-            className="text-green-600 border border-green-500 px-3 py-1 rounded text-sm hover:bg-green-50 flex items-center gap-1 cursor-pointer"
+            disabled={!!activeHighlightingField}
+            className={`flex items-center gap-1 rounded border border-green-500 px-3 py-1 text-sm text-green-600 hover:bg-green-50 ${activeHighlightingField ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             onClick={() => {
               const availableFields = getAvailableOptionalFields();
               if (availableFields.length === 1) {
@@ -265,8 +269,12 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
 
       {customTypeModalField && (
         <CustomTypeModal
-          customType={getCustomTypeDefinition(customTypeModalField.customTypeId)!}
-          initialValues={getFieldValue(customTypeModalField.fieldId)?.value || {}}
+          customType={
+            getCustomTypeDefinition(customTypeModalField.customTypeId)!
+          }
+          initialValues={
+            getFieldValue(customTypeModalField.fieldId)?.value || {}
+          }
           onSave={handleCustomTypeSave}
           onCancel={() => setCustomTypeModalField(null)}
         />

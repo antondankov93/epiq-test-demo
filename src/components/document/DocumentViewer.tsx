@@ -1,18 +1,12 @@
 import {FC} from 'react';
-import { Document, Highlight } from '@/types/common';
+import { Document, Highlight, TextSelection } from '@/types/common';
 import { DocumentContent } from './DocumentContent';
-
-type TextSelectEvent = {
-  text: string;
-  startOffset: number;
-  endOffset: number;
-};
 
 type DocumentViewerProps = {
   selectedDocument: Document | null;
   highlights: Highlight[];
   activeHighlightIds: string[];
-  onTextSelect: (selection: TextSelectEvent) => void;
+  onTextSelect: (selection: TextSelection) => void;
   onHighlightClick: (highlightId: string) => void;
   isHighlightingActive: boolean;
 }

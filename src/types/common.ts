@@ -1,7 +1,17 @@
+// Basic primitive types
+export type StringType = string;
+export type IntegerType = 'Integer' | 'integer';
+export type ArrayType = string[];
+
+// Custom type for structured data
+export type CustomTypeValue = Record<string, string | number | boolean | null>;
+
+// Union of all possible field types
 export type FieldType =
-  | string 
-  | string[] 
-  | { [key: string]: any };
+  | StringType
+  | IntegerType
+  | ArrayType
+  | string; // For custom type IDs
 
 export type FieldDefinition = {
   id: string;
@@ -33,9 +43,17 @@ export type Highlight = {
   color: string;
 }
 
+// Possible field value types
+export type FieldValueType =
+  | string
+  | number
+  | boolean
+  | null
+  | CustomTypeValue;
+
 export type FieldValue = {
   fieldId: string;
-  value: any;
+  value: FieldValueType;
   highlights: Highlight[];
 }
 
@@ -57,3 +75,19 @@ export type CustomTypeModalField = {
   fieldId: string;
   customTypeId: string;
 }
+
+// Text selection event type
+export type TextSelection = {
+  text: string;
+  startOffset: number;
+  endOffset: number;
+}
+
+// Active highlighting field type
+export type ActiveHighlightingField = {
+  fieldId: string;
+  kuId: string;
+} | null;
+
+// Highlight without ID and color (for adding new highlights)
+export type HighlightData = Omit<Highlight, 'id' | 'color'>;

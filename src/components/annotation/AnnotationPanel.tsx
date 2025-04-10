@@ -1,5 +1,10 @@
 import {FC} from 'react';
-import { KnowledgeUnitSchema, KnowledgeUnit as KnowledgeUnitType, Highlight } from '@/types/common';
+import {
+  KnowledgeUnitSchema,
+  KnowledgeUnit as KnowledgeUnitType,
+  ActiveHighlightingField,
+  HighlightData
+} from '@/types/common';
 import { KnowledgeUnit } from './KnowledgeUnit';
 import { KnowledgeUnitDropdown } from './KnowledgeUnitDropdown';
 import { useKnowledgeUnits } from '@/hooks';
@@ -11,9 +16,9 @@ type AnnotationPanelProps = {
   knowledgeUnitSchemas: KnowledgeUnitSchema[];
   knowledgeUnits: KnowledgeUnitType[];
   onUpdateKnowledgeUnits: (knowledgeUnits: KnowledgeUnitType[]) => void;
-  activeHighlightingField: { fieldId: string; kuId: string } | null;
+  activeHighlightingField: ActiveHighlightingField;
   onToggleHighlighting: (fieldId: string, kuId: string) => void;
-  onAddHighlight: (highlight: Omit<Highlight, 'id' | 'color'>) => void;
+  onAddHighlight: (highlight: HighlightData) => void;
 }
 
 export const AnnotationPanel: FC<AnnotationPanelProps> = ({

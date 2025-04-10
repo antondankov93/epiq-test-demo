@@ -1,19 +1,13 @@
 import {useRef, useEffect, FC} from 'react';
 import { Paintbrush } from 'lucide-react';
-import { Highlight } from '@/types/common';
-
-type TextSelectEvent = {
-  text: string;
-  startOffset: number;
-  endOffset: number;
-};
+import { Highlight, TextSelection } from '@/types/common';
 
 type DocumentContentProps = {
   content: string;
   highlights: Highlight[];
   activeHighlightIds: string[];
   onHighlightClick: (highlightId: string) => void;
-  onTextSelect: (selection: TextSelectEvent) => void;
+  onTextSelect: (selection: TextSelection) => void;
   isHighlightingActive: boolean;
 }
 

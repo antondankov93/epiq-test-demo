@@ -1,19 +1,19 @@
 import {FC, useState} from 'react';
 import { AlertTriangle, Info } from 'lucide-react';
 import { FieldHighlighter } from './FieldHighlighter';
-import { FieldDefinition, Highlight } from '@/types/common';
+import { FieldDefinition, Highlight, FieldValueType } from '@/types/common';
 import { dynamicLists } from '@/utils/mockData';
 
 type FieldInputProps = {
   field: FieldDefinition;
-  value: any;
+  value: FieldValueType;
   highlights: Highlight[];
   isRequired: boolean;
   isOptional: boolean;
   fieldColor: string;
   isHighlightingActive: boolean;
   error?: string;
-  onUpdateValue: (value: any) => void;
+  onUpdateValue: (value: FieldValueType) => void;
   onRemoveField: () => void;
   onToggleHighlighting: (fieldId: string, kuId: string) => void;
   onClearHighlights: (fieldId: string, kuId: string) => void;
@@ -39,8 +39,6 @@ export const FieldInput: FC<FieldInputProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  console.log('field', field);
-  console.log('onOpenCustomType', onOpenCustomType);
 
   const getFilteredOptions = (options: string[]): string[] => {
     const term = searchTerm.toLowerCase();
@@ -86,7 +84,7 @@ export const FieldInput: FC<FieldInputProps> = ({
               setIsDropdownOpen(true);
             }}
             onFocus={() => setIsDropdownOpen(true)}
-            placeholder={value || `Search ${name}...`}
+            placeholder={value as string || `Search ${name}...`}
           />
           {isDropdownOpen && (
             <div className="absolute top-full left-0 right-0 max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-b z-10">
@@ -131,7 +129,7 @@ export const FieldInput: FC<FieldInputProps> = ({
         <input
           type="number"
           className="w-full p-2 border border-gray-300 rounded"
-          value={value || ''}
+          value={value as string || ''}
           onChange={(e) => onUpdateValue(e.target.value ? parseInt(e.target.value) : '')}
         />
       );

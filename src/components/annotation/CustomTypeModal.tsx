@@ -1,11 +1,11 @@
 import {FC, useState} from 'react';
 import { X, Save, AlertTriangle } from 'lucide-react';
-import { CustomTypeDefinition, FieldDefinition } from '@/types/common';
+import { CustomTypeDefinition, FieldDefinition, CustomTypeValue } from '@/types/common';
 
 type CustomTypeModalProps = {
   customType: CustomTypeDefinition;
-  initialValues?: Record<string, any>;
-  onSave: (values: Record<string, any>) => void;
+  initialValues?: CustomTypeValue;
+  onSave: (values: CustomTypeValue) => void;
   onCancel: () => void;
 }
 
@@ -15,10 +15,10 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
   onSave,
   onCancel,
 }) => {
-  const [values, setValues] = useState<Record<string, any>>(initialValues);
+  const [values, setValues] = useState<CustomTypeValue>(initialValues || {});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleChange = (fieldId: string, value: any) => {
+  const handleChange = (fieldId: string, value: string | number | boolean | null) => {
     setValues((prev) => ({
       ...prev,
       [fieldId]: value,
@@ -34,7 +34,6 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
   };
 
   const handleSubmit = () => {
-    // Validate that at least one field has a value
     const hasValue = Object.values(values).some((value) =>
       value !== undefined && value !== null && value !== ''
     );
@@ -123,10 +122,10 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
         <div className="p-4">
           {customType.Fields.map(renderField)}
 
-          {errors.form && (
+          {errors['form'] && (
             <div className="text-red-500 text-sm p-2 bg-red-50 rounded flex items-center gap-2">
               <AlertTriangle size={16} />
-              {errors.form}
+              {errors['form']}
             </div>
           )}
         </div>

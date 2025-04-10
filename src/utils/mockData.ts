@@ -1,39 +1,39 @@
-import { KnowledgeUnitSchema, Document, CustomTypeDefinition } from '@/types/common.ts';
+import { KnowledgeUnitSchema, Document, CustomTypeDefinition } from '@/types/common';
 
 export const knowledgeUnitSchemas: KnowledgeUnitSchema[] = [
   {
     "Frame Label": "employment",
     "Frame ID": "employment",
     "Fields": [
-      { 
-        "name": "person", 
-        "id": "person", 
-        "type": ["LIST_PERSON"], 
-        "required": true 
+      {
+        "name": "person",
+        "id": "person",
+        "type": ["LIST_PERSON"],
+        "required": true
       },
-      { 
-        "name": "company", 
-        "id": "company", 
-        "type": ["LIST_COMPANY"], 
-        "required": false 
+      {
+        "name": "company",
+        "id": "company",
+        "type": ["LIST_COMPANY"],
+        "required": false
       },
-      { 
-        "name": "title", 
-        "id": "title", 
-        "type": "string", 
-        "required": false 
+      {
+        "name": "title",
+        "id": "title",
+        "type": "string",
+        "required": false
       },
-      { 
-        "name": "dept", 
-        "id": "dept", 
-        "type": "string", 
-        "required": false 
+      {
+        "name": "dept",
+        "id": "dept",
+        "type": "string",
+        "required": false
       },
-      { 
-        "name": "time", 
-        "id": "time", 
-        "type": ["email-date", "past", "future"], 
-        "required": false 
+      {
+        "name": "time",
+        "id": "time",
+        "type": ["email-date", "past", "future"],
+        "required": false
       }
     ]
   },
@@ -41,23 +41,23 @@ export const knowledgeUnitSchemas: KnowledgeUnitSchema[] = [
     "Frame Label": "sentiment",
     "Frame ID": "sentiment",
     "Fields": [
-      { 
-        "name": "by", 
-        "id": "by", 
-        "type": ["LIST_PERSON"], 
-        "required": true 
+      {
+        "name": "by",
+        "id": "by",
+        "type": ["LIST_PERSON"],
+        "required": true
       },
-      { 
-        "name": "towards", 
-        "id": "towards", 
-        "type": ["LIST_PERSON", "LIST_COMPANY"], 
-        "required": true 
+      {
+        "name": "towards",
+        "id": "towards",
+        "type": ["LIST_PERSON", "LIST_COMPANY"],
+        "required": true
       },
-      { 
-        "name": "polarity", 
-        "id": "polarity", 
-        "type": ["positive", "negative", "neutral"], 
-        "required": true 
+      {
+        "name": "polarity",
+        "id": "polarity",
+        "type": ["positive", "negative", "neutral"],
+        "required": true
       }
     ]
   }
