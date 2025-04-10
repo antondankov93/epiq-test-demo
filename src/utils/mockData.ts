@@ -1,6 +1,5 @@
 import { KnowledgeUnitSchema, Document, CustomTypeDefinition } from '@/types/common.ts';
 
-// Sample Knowledge Unit Schemas
 export const knowledgeUnitSchemas: KnowledgeUnitSchema[] = [
   {
     "Frame Label": "employment",
@@ -64,7 +63,6 @@ export const knowledgeUnitSchemas: KnowledgeUnitSchema[] = [
   }
 ];
 
-// Sample Custom Type Definition
 export const customTypes: CustomTypeDefinition[] = [
   {
     "type ID": "CUSTOM_DATE",
@@ -92,7 +90,6 @@ export const customTypes: CustomTypeDefinition[] = [
   }
 ];
 
-// Sample Dynamic Lists
 export const dynamicLists = {
   "DYNAMIC_PEOPLE": [
     "John Smith",
@@ -120,7 +117,6 @@ export const dynamicLists = {
   ]
 };
 
-// Sample Documents
 export const documents: Document[] = [
   {
     id: "doc1",

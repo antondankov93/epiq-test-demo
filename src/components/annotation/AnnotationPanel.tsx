@@ -25,7 +25,6 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
   onToggleHighlighting,
   onAddHighlight,
 }) => {
-  // Use custom hook for knowledge unit management
   const {
     showKuDropdown,
     setShowKuDropdown,
@@ -42,7 +41,7 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
         <>
           <div className="relative mb-4">
             <button
-              className="w-full py-2 px-4 bg-green-500 text-white rounded font-bold hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2 px-4 bg-green-500 text-white rounded font-bold hover:bg-green-600 transition-colors flex items-center justify-center gap-2 cursor-pointer"
               onClick={() => setShowKuDropdown(!showKuDropdown)}
             >
               <PlusCircle size={18} />
@@ -68,15 +67,17 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
 
                 return (
                   <KnowledgeUnit
+                    {...{
+                      schema,
+                      activeHighlightingField,
+                      onAddHighlight,
+                      getFieldColor,
+                    }}
                     key={ku.id}
-                    schema={schema}
                     knowledgeUnit={ku}
                     onUpdate={updateKnowledgeUnit}
                     onRemove={removeKnowledgeUnit}
                     onToggleHighlighting={onToggleHighlighting}
-                    activeHighlightingField={activeHighlightingField}
-                    onAddHighlight={onAddHighlight}
-                    getFieldColor={getFieldColor}
                   />
                 );
               })}

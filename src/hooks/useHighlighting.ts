@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Highlight, KnowledgeUnit } from '../types';
+import { Highlight, KnowledgeUnit } from '@/types/common';
 import { getFieldColor } from '../utils/colorUtils';
 
 export const useHighlighting = (

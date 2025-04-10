@@ -1,54 +1,33 @@
-# React + TypeScript + Vite
+# Epiq Test Demo (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To get started, you will need to install the following dependencies:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+  pnpm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Running the Application
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+  pnpm dev
+```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+## Semantic commits
+General formula `<type>(<scope>): <subject>`
+```
+<type> – the type of commit should be one of the following:
+   feat: adding new functionality
+   fix: fixing a bug
+   docs: changes to documentation
+   style: code changes that do not affect its meaning (formatting, adding semicolons, etc.)
+   refactor: code changes that neither fix a bug nor add a feature
+   perf: code changes that improve performance
+   test: adding new tests or correcting existing ones
+   chore: other changes that do not affect the code
+```
+```
+<scope> – specifies the place or functionality affected by the commit (file name, scope of changes, etc.)
+```
+```
+<subject> – the content of the message, "What exactly was done?"
 ```

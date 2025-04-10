@@ -28,22 +28,28 @@ function App() {
   return (
     <div className="flex h-screen w-screen overflow-hidden">
       <DocumentList
-        selectedDocumentId={selectedDocumentId}
-        documents={allDocuments}
+          {...{
+              allDocuments,
+              selectedDocumentId
+          }}
         onSelectDocument={selectDocument}
       />
       <DocumentViewer
-        highlights={highlights}
-        activeHighlightIds={activeHighlightIds}
-        document={selectedDocument}
+          {...{
+              highlights,
+              activeHighlightIds,
+              selectedDocument
+          }}
         onTextSelect={handleTextSelect}
         onHighlightClick={handleHighlightClick}
         isHighlightingActive={!!activeHighlightingField}
       />
       <AnnotationPanel
-        activeHighlightingField={activeHighlightingField}
-        knowledgeUnitSchemas={knowledgeUnitSchemas}
-        knowledgeUnits={knowledgeUnits}
+        {...{
+          activeHighlightingField,
+          knowledgeUnitSchemas,
+          knowledgeUnits,
+        }}
         documentId={selectedDocumentId}
         onUpdateKnowledgeUnits={updateKnowledgeUnits}
         onToggleHighlighting={toggleHighlighting}

@@ -2,12 +2,18 @@ import {useRef, useEffect, FC} from 'react';
 import { Paintbrush } from 'lucide-react';
 import { Highlight } from '@/types/common';
 
+type TextSelectEvent = {
+  text: string;
+  startOffset: number;
+  endOffset: number;
+};
+
 type DocumentContentProps = {
   content: string;
   highlights: Highlight[];
   activeHighlightIds: string[];
   onHighlightClick: (highlightId: string) => void;
-  onTextSelect: (selection: { text: string; startOffset: number; endOffset: number }) => void;
+  onTextSelect: (selection: TextSelectEvent) => void;
   isHighlightingActive: boolean;
 }
 
@@ -23,18 +29,13 @@ export const DocumentContent: FC<DocumentContentProps> = ({
 
   useEffect(() => {
     if (!contentRef.current) return;
-
-    // Apply highlights to the document content
     const applyHighlights = () => {
       if (!contentRef.current) return;
 
-      // Reset content
       contentRef.current.innerHTML = content;
 
-      // Sort highlights by start offset in descending order to avoid position shifts
       const sortedHighlights = [...highlights].sort((a, b) => b.startOffset - a.startOffset);
 
-      // Apply each highlight
       for (const highlight of sortedHighlights) {
         const contentHtml = contentRef.current.innerHTML;
         const before = contentHtml.substring(0, highlight.startOffset);
@@ -50,7 +51,6 @@ export const DocumentContent: FC<DocumentContentProps> = ({
         >${highlighted}</span>${after}`;
       }
 
-      // Add click event listeners to highlights
       const highlightElements = contentRef.current.querySelectorAll('.highlight');
       highlightElements.forEach((element) => {
         element.addEventListener('click', (e) => {
@@ -64,7 +64,25 @@ export const DocumentContent: FC<DocumentContentProps> = ({
     };
 
     applyHighlights();
-  }, [content, highlights, activeHighlightIds, onHighlightClick]);
+  }, [content, highlights, activeHighlightIds]);
+
+  const getTextOffset = (container: Node, node: Node, offset: number): number => {
+    if (!container.contains(node)) return -1;
+
+    let totalOffset = 0;
+    const walk = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+    let currentNode = walk.nextNode();
+
+    while (currentNode) {
+      if (currentNode === node) {
+        return totalOffset + offset;
+      }
+      totalOffset += currentNode.textContent?.length || 0;
+      currentNode = walk.nextNode();
+    }
+
+    return -1;
+  };
 
   const handleMouseUp = () => {
     if (!isHighlightingActive) return;
@@ -86,37 +104,20 @@ export const DocumentContent: FC<DocumentContentProps> = ({
     }
   };
 
-  // Helper function to get text offset relative to the container
-  const getTextOffset = (container: Node, node: Node, offset: number): number => {
-    if (!container.contains(node)) return -1;
-
-    let totalOffset = 0;
-    const walk = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
-    let currentNode = walk.nextNode();
-
-    while (currentNode) {
-      if (currentNode === node) {
-        return totalOffset + offset;
-      }
-      totalOffset += currentNode.textContent?.length || 0;
-      currentNode = walk.nextNode();
-    }
-
-    return -1;
-  };
-
-  // Apply cursor style based on highlighting mode
   const cursorStyle = isHighlightingActive ? 'cursor-crosshair' : 'cursor-text';
 
   return (
-    <div
-      ref={contentRef}
-      className={`whitespace-pre-wrap leading-relaxed font-mono ${cursorStyle} ${isHighlightingActive ? 'bg-gray-50' : ''}`}
-      onMouseUp={handleMouseUp}
-    >
-      {content}
+    <div className="relative">
+      <div
+        ref={contentRef}
+        className={`whitespace-pre-wrap leading-relaxed font-mono ${cursorStyle} ${isHighlightingActive ? 'bg-gray-50' : ''}`}
+        onMouseUp={handleMouseUp}
+      >
+        {content}
+      </div>
+
       {isHighlightingActive && (
-        <div className="fixed bottom-4 right-4 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg shadow-md flex items-center gap-2">
+        <div className="absolute w-full h-12 mt-4 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg shadow-md flex items-center gap-2">
           <Paintbrush size={16} />
           Highlighting Mode: Select text to highlight
         </div>

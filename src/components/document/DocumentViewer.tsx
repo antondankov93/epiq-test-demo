@@ -2,17 +2,23 @@ import {FC} from 'react';
 import { Document, Highlight } from '@/types/common';
 import { DocumentContent } from './DocumentContent';
 
+type TextSelectEvent = {
+  text: string;
+  startOffset: number;
+  endOffset: number;
+};
+
 type DocumentViewerProps = {
-  document: Document | null;
+  selectedDocument: Document | null;
   highlights: Highlight[];
   activeHighlightIds: string[];
-  onTextSelect: (selection: { text: string; startOffset: number; endOffset: number }) => void;
+  onTextSelect: (selection: TextSelectEvent) => void;
   onHighlightClick: (highlightId: string) => void;
   isHighlightingActive: boolean;
 }
 
 export const DocumentViewer: FC<DocumentViewerProps> = ({
-  document,
+  selectedDocument,
   highlights,
   activeHighlightIds,
   onTextSelect,
@@ -21,16 +27,18 @@ export const DocumentViewer: FC<DocumentViewerProps> = ({
 }) => {
   return (
     <div className="flex-1 h-full overflow-y-auto p-5 bg-white relative">
-      {document ? (
+      {selectedDocument ? (
         <>
-          <h2 className="text-2xl font-bold mb-4">{document.title}</h2>
+          <h2 className="text-2xl font-bold mb-4">{selectedDocument.title}</h2>
           <DocumentContent
-            content={document.content}
-            highlights={highlights}
-            activeHighlightIds={activeHighlightIds}
-            onTextSelect={onTextSelect}
-            onHighlightClick={onHighlightClick}
-            isHighlightingActive={isHighlightingActive}
+            {...{
+              highlights,
+              activeHighlightIds,
+              onTextSelect,
+              onHighlightClick,
+              isHighlightingActive,
+            }}
+            content={selectedDocument.content}
           />
         </>
       ) : (

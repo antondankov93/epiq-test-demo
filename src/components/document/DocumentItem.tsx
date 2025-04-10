@@ -27,7 +27,7 @@ export const DocumentItem: FC<DocumentItemProps> = ({
     >
       {title}
       {hasAnnotations && (
-        <CheckCircle size={16} className="ml-1 text-green-600 inline" />
+        <CheckCircle size={16} className="ml-2 text-green-600 inline" />
       )}
     </li>
   );

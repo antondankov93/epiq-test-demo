@@ -24,7 +24,6 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
       [fieldId]: value,
     }));
 
-    // Clear error when field is filled
     if (value) {
       setErrors((prev) => {
         const newErrors = { ...prev };
@@ -54,7 +53,6 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
     const { id, name, type } = field;
 
     if (Array.isArray(type)) {
-      // Dropdown field
       return (
         <div className="mb-4" key={id}>
           <label className="block font-medium mb-1" htmlFor={id}>
@@ -76,7 +74,6 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
         </div>
       );
     } else if (type === 'Integer') {
-      // Integer field
       return (
         <div className="mb-4" key={id}>
           <label className="block font-medium mb-1" htmlFor={id}>
@@ -92,7 +89,6 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
         </div>
       );
     } else {
-      // String field
       return (
         <div className="mb-4" key={id}>
           <label className="block font-medium mb-1" htmlFor={id}>

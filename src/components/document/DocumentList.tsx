@@ -3,18 +3,17 @@ import { Document } from '@/types/common';
 import { DocumentItem } from './DocumentItem';
 
 type DocumentListProps = {
-  documents: Document[];
+  allDocuments: Document[];
   selectedDocumentId: string | null;
   onSelectDocument: (documentId: string) => void;
 }
 
 export const DocumentList: FC<DocumentListProps> = ({
-  documents,
+  allDocuments,
   selectedDocumentId,
   onSelectDocument,
 }) => {
-  // Sort documents - those with annotations come first
-  const sortedDocuments = [...documents].sort((a, b) => {
+  const sortedDocuments = [...allDocuments].sort((a, b) => {
     if (a.hasAnnotations && !b.hasAnnotations) return -1;
     if (!a.hasAnnotations && b.hasAnnotations) return 1;
     return 0;

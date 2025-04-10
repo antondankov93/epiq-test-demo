@@ -1,7 +1,7 @@
 import {FC, useState} from 'react';
 import { AlertTriangle, Info } from 'lucide-react';
-import { FieldDefinition, Highlight } from '@/types/common';
 import { FieldHighlighter } from './FieldHighlighter';
+import { FieldDefinition, Highlight } from '@/types/common';
 import { dynamicLists } from '@/utils/mockData';
 
 type FieldInputProps = {
@@ -18,7 +18,7 @@ type FieldInputProps = {
   onToggleHighlighting: (fieldId: string, kuId: string) => void;
   onClearHighlights: (fieldId: string, kuId: string) => void;
   kuId: string;
-  onOpenCustomType?: () => void;
+  onOpenCustomType?: (fieldId: string, customTypeId: string) => void;
 }
 
 export const FieldInput: FC<FieldInputProps> = ({
@@ -39,8 +39,9 @@ export const FieldInput: FC<FieldInputProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  console.log('field', field);
+  console.log('onOpenCustomType', onOpenCustomType);
 
-  // Filter dynamic list options based on search term
   const getFilteredOptions = (options: string[]): string[] => {
     const term = searchTerm.toLowerCase();
     if (!term) return options;
@@ -50,7 +51,6 @@ export const FieldInput: FC<FieldInputProps> = ({
     );
   };
 
-  // Resolve dynamic list type to actual options
   const resolveDynamicListType = (type: string | string[]): string[] => {
     if (!Array.isArray(type)) return [];
 
@@ -72,7 +72,6 @@ export const FieldInput: FC<FieldInputProps> = ({
   const renderInputField = () => {
     const { id, name, type } = field;
 
-    // Dropdown field with dynamic lists
     if (Array.isArray(type) && type.some(t => typeof t === 'string' && t.startsWith('DYNAMIC_'))) {
       const options = resolveDynamicListType(type);
 
@@ -110,7 +109,6 @@ export const FieldInput: FC<FieldInputProps> = ({
       );
     }
 
-    // Regular dropdown for non-dynamic lists
     if (Array.isArray(type)) {
       return (
         <select
@@ -128,7 +126,6 @@ export const FieldInput: FC<FieldInputProps> = ({
       );
     }
 
-    // Integer field
     if (type === 'integer' || type === 'Integer') {
       return (
         <input
@@ -140,12 +137,11 @@ export const FieldInput: FC<FieldInputProps> = ({
       );
     }
 
-    // Custom type field
     if (typeof type === 'string' && onOpenCustomType) {
       return (
         <div
           className="cursor-pointer"
-          onClick={onOpenCustomType}
+          onClick={() => onOpenCustomType(id, type)}
         >
           {value ? (
             <div className="p-2 border border-gray-300 rounded bg-gray-50">
@@ -166,7 +162,6 @@ export const FieldInput: FC<FieldInputProps> = ({
       );
     }
 
-    // Default: string field
     return (
       <input
         type="text"
@@ -185,13 +180,15 @@ export const FieldInput: FC<FieldInputProps> = ({
         </div>
         <div className="flex items-center">
           <FieldHighlighter
+            {...{
+              kuId,
+              highlights,
+              onToggleHighlighting,
+              onClearHighlights,
+            }}
             fieldId={field.id}
-            kuId={kuId}
-            highlights={highlights}
             color={fieldColor}
             isActive={isHighlightingActive}
-            onToggleHighlighting={onToggleHighlighting}
-            onClearHighlights={onClearHighlights}
           />
           {isOptional && (
             <button
