@@ -1,12 +1,14 @@
-import {FC} from 'react';
-import { Document } from '@/types/common';
+import type { FC } from 'react';
+
 import { DocumentItem } from './DocumentItem';
+
+import type { Document } from '@/types/common';
 
 type DocumentListProps = {
   allDocuments: Document[];
   selectedDocumentId: string | null;
   onSelectDocument: (documentId: string) => void;
-}
+};
 
 export const DocumentList: FC<DocumentListProps> = ({
   allDocuments,
@@ -20,9 +22,11 @@ export const DocumentList: FC<DocumentListProps> = ({
   });
 
   return (
-    <div className="w-64 h-full overflow-y-auto border-r border-gray-300 bg-gray-100 p-4">
-      <h2 className="text-xl font-bold mb-4 pb-2 border-b border-gray-300">Documents</h2>
-      <ul className="list-none p-0 m-0">
+    <div className="border-GRAY_PRIMARY bg-GRAY_PRIMARY/20 h-full w-64 overflow-y-auto border-r p-4">
+      <h2 className="border-GRAY_PRIMARY mb-4 border-b pb-2 text-xl font-bold">
+        Documents
+      </h2>
+      <ul className="m-0 list-none p-0">
         {sortedDocuments.map((document) => (
           <DocumentItem
             key={document.id}

@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import type { FC } from 'react';
 import { CheckCircle } from 'lucide-react';
 
 type DocumentItemProps = {
@@ -7,7 +7,7 @@ type DocumentItemProps = {
   hasAnnotations: boolean;
   isSelected: boolean;
   onSelect: (id: string) => void;
-}
+};
 
 export const DocumentItem: FC<DocumentItemProps> = ({
   id,
@@ -15,20 +15,18 @@ export const DocumentItem: FC<DocumentItemProps> = ({
   hasAnnotations,
   isSelected,
   onSelect,
-}) => {
-  return (
-    <li
-      className={`
-        p-2.5 mb-1.5 rounded cursor-pointer transition-colors
-        ${isSelected ? 'bg-gray-300 font-bold' : 'hover:bg-gray-200'}
-        ${hasAnnotations ? 'border-l-4 border-green-500' : ''}
+}) => (
+  <li
+    className={`
+        mb-1.5 cursor-pointer rounded p-2.5 transition-colors
+        ${isSelected ? 'bg-GRAY_PRIMARY font-semibold' : 'hover:bg-GRAY_PRIMARY'}
+        ${hasAnnotations ? 'border-GREEN_PRIMARY border-l-4' : ''}
       `}
-      onClick={() => onSelect(id)}
-    >
-      {title}
-      {hasAnnotations && (
-        <CheckCircle size={16} className="ml-2 text-green-600 inline" />
-      )}
-    </li>
-  );
-};
+    onClick={() => onSelect(id)}
+  >
+    {title}
+    {hasAnnotations && (
+      <CheckCircle size={16} className="text-GREEN_PRIMARY ml-2 inline" />
+    )}
+  </li>
+);

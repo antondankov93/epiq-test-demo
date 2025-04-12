@@ -1,126 +1,146 @@
-import { KnowledgeUnitSchema, Document, CustomTypeDefinition } from '@/types/common';
+import type {
+  KnowledgeUnitSchema,
+  Document,
+  CustomTypeDefinition,
+} from '@/types/common';
 
 export const knowledgeUnitSchemas: KnowledgeUnitSchema[] = [
   {
-    "Frame Label": "employment",
-    "Frame ID": "employment",
-    "Fields": [
+    'Frame Label': 'employment',
+    'Frame ID': 'employment',
+    Fields: [
       {
-        "name": "person",
-        "id": "person",
-        "type": ["LIST_PERSON"],
-        "required": true
+        name: 'person',
+        id: 'person',
+        type: ['LIST_PERSON'],
+        required: true,
       },
       {
-        "name": "company",
-        "id": "company",
-        "type": ["LIST_COMPANY"],
-        "required": false
+        name: 'company',
+        id: 'company',
+        type: ['LIST_COMPANY'],
+        required: false,
       },
       {
-        "name": "title",
-        "id": "title",
-        "type": "string",
-        "required": false
+        name: 'title',
+        id: 'title',
+        type: 'string',
+        required: false,
       },
       {
-        "name": "dept",
-        "id": "dept",
-        "type": "string",
-        "required": false
+        name: 'dept',
+        id: 'dept',
+        type: 'string',
+        required: false,
       },
       {
-        "name": "time",
-        "id": "time",
-        "type": ["email-date", "past", "future"],
-        "required": false
-      }
-    ]
+        name: 'time',
+        id: 'time',
+        type: ['email-date', 'past', 'future'],
+        required: false,
+      },
+    ],
   },
   {
-    "Frame Label": "sentiment",
-    "Frame ID": "sentiment",
-    "Fields": [
+    'Frame Label': 'sentiment',
+    'Frame ID': 'sentiment',
+    Fields: [
       {
-        "name": "by",
-        "id": "by",
-        "type": ["LIST_PERSON"],
-        "required": true
+        name: 'by',
+        id: 'by',
+        type: ['LIST_PERSON'],
+        required: true,
       },
       {
-        "name": "towards",
-        "id": "towards",
-        "type": ["LIST_PERSON", "LIST_COMPANY"],
-        "required": true
+        name: 'towards',
+        id: 'towards',
+        type: ['LIST_PERSON', 'LIST_COMPANY'],
+        required: true,
       },
       {
-        "name": "polarity",
-        "id": "polarity",
-        "type": ["positive", "negative", "neutral"],
-        "required": true
-      }
-    ]
-  }
+        name: 'polarity',
+        id: 'polarity',
+        type: ['positive', 'negative', 'neutral'],
+        required: true,
+      },
+    ],
+  },
 ];
 
 export const customTypes: CustomTypeDefinition[] = [
   {
-    "type ID": "CUSTOM_DATE",
-    "Type Label": "Date",
-    "Fields": [
+    'type ID': 'CUSTOM_DATE',
+    'Type Label': 'Date',
+    Fields: [
       {
-        "id": "month",
-        "name": "Month",
-        "type": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        "required": false
+        id: 'month',
+        name: 'Month',
+        type: [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ],
+        required: false,
       },
       {
-        "id": "day",
-        "name": "Day",
-        "type": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-        "required": false
+        id: 'day',
+        name: 'Day',
+        type: [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+          21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+        ],
+        required: false,
       },
       {
-        "id": "year",
-        "name": "Year",
-        "type": "Integer",
-        "required": false
-      }
-    ]
-  }
+        id: 'year',
+        name: 'Year',
+        type: 'Integer',
+        required: false,
+      },
+    ],
+  },
 ];
 
 export const dynamicLists = {
-  "DYNAMIC_PEOPLE": [
-    "John Smith",
-    "Jane Doe",
-    "Robert Johnson",
-    "Emily Davis",
-    "Michael Brown",
-    "Sarah Wilson",
-    "David Miller",
-    "Jennifer Taylor",
-    "James Anderson",
-    "Lisa Thomas"
+  DYNAMIC_PEOPLE: [
+    'John Smith',
+    'Jane Doe',
+    'Robert Johnson',
+    'Emily Davis',
+    'Michael Brown',
+    'Sarah Wilson',
+    'David Miller',
+    'Jennifer Taylor',
+    'James Anderson',
+    'Lisa Thomas',
   ],
-  "DYNAMIC_COMPANY": [
-    "Acme Corporation",
-    "Globex Inc.",
-    "Initech",
-    "Umbrella Corporation",
-    "Stark Industries",
-    "Wayne Enterprises",
-    "Cyberdyne Systems",
-    "Soylent Corp",
-    "Massive Dynamic",
-    "Oscorp Industries"
-  ]
+  DYNAMIC_COMPANY: [
+    'Acme Corporation',
+    'Globex Inc.',
+    'Initech',
+    'Umbrella Corporation',
+    'Stark Industries',
+    'Wayne Enterprises',
+    'Cyberdyne Systems',
+    'Soylent Corp',
+    'Massive Dynamic',
+    'Oscorp Industries',
+  ],
 };
 
 export const documents: Document[] = [
   {
-    id: "doc1",
-    title: "Email from John Smith",
+    id: 'doc1',
+    title: 'Email from John Smith',
     content: `From: john.smith@example.com
 To: hr@acmecorp.com
 Subject: Job Application Follow-up
@@ -139,11 +159,11 @@ Best regards,
 John Smith
 Phone: (555) 123-4567`,
     hasAnnotations: false,
-    knowledgeUnits: []
+    knowledgeUnits: [],
   },
   {
-    id: "doc2",
-    title: "Product Review Email",
+    id: 'doc2',
+    title: 'Product Review Email',
     content: `From: emily.davis@example.com
 To: feedback@globexinc.com
 Subject: Review of your new XYZ product
@@ -167,11 +187,11 @@ Regards,
 Emily Davis
 Satisfied Customer`,
     hasAnnotations: false,
-    knowledgeUnits: []
+    knowledgeUnits: [],
   },
   {
-    id: "doc3",
-    title: "Meeting Minutes",
+    id: 'doc3',
+    title: 'Meeting Minutes',
     content: `MEETING MINUTES
 Project: Q3 Strategic Planning
 Date: July 15, 2023
@@ -204,6 +224,6 @@ ACTION ITEMS:
 
 Next meeting scheduled for August 1, 2023`,
     hasAnnotations: false,
-    knowledgeUnits: []
-  }
+    knowledgeUnits: [],
+  },
 ];

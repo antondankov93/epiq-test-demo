@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import { Document, KnowledgeUnit, Highlight } from '@/types/common';
+
+import type { Document, KnowledgeUnit, Highlight } from '@/types/common';
 
 export const useDocuments = (initialDocuments: Document[]) => {
-  const [allDocuments, setAllDocuments] = useState<Document[]>(initialDocuments);
-  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
-  const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
+  const [allDocuments, setAllDocuments] =
+    useState<Document[]>(initialDocuments);
+  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(
+    null
+  );
+  const [selectedDocument, setSelectedDocument] = useState<Document | null>(
+    null
+  );
   const [knowledgeUnits, setKnowledgeUnits] = useState<KnowledgeUnit[]>([]);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
 
@@ -37,10 +43,11 @@ export const useDocuments = (initialDocuments: Document[]) => {
         }
         return doc;
       });
-      
+
       setAllDocuments(updatedDocuments);
 
-      const updatedDoc = updatedDocuments.find((d) => d.id === selectedDocumentId) || null;
+      const updatedDoc =
+        updatedDocuments.find((d) => d.id === selectedDocumentId) || null;
       setSelectedDocument(updatedDoc);
 
       const docHighlights: Highlight[] = [];
@@ -60,6 +67,6 @@ export const useDocuments = (initialDocuments: Document[]) => {
     knowledgeUnits,
     highlights,
     selectDocument,
-    updateKnowledgeUnits
+    updateKnowledgeUnits,
   };
 };

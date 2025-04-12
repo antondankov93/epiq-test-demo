@@ -1,15 +1,17 @@
-import {FC} from 'react';
-import {
+import type { FC } from 'react';
+import { PlusCircle } from 'lucide-react';
+
+import { KnowledgeUnit } from './KnowledgeUnit';
+import { KnowledgeUnitDropdown } from './KnowledgeUnitDropdown';
+
+import type {
   KnowledgeUnitSchema,
   KnowledgeUnit as KnowledgeUnitType,
   ActiveHighlightingField,
-  HighlightData
+  HighlightData,
 } from '@/types/common';
-import { KnowledgeUnit } from './KnowledgeUnit';
-import { KnowledgeUnitDropdown } from './KnowledgeUnitDropdown';
 import { useKnowledgeUnits } from '@/hooks';
 import { getFieldColor } from '@/utils/colorUtils';
-import { PlusCircle } from 'lucide-react';
 
 type AnnotationPanelProps = {
   documentId: string | null;
@@ -19,7 +21,7 @@ type AnnotationPanelProps = {
   activeHighlightingField: ActiveHighlightingField;
   onToggleHighlighting: (fieldId: string, kuId: string) => void;
   onAddHighlight: (highlight: HighlightData) => void;
-}
+};
 
 export const AnnotationPanel: FC<AnnotationPanelProps> = ({
   documentId,
@@ -35,18 +37,24 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
     setShowKuDropdown,
     addKnowledgeUnit,
     updateKnowledgeUnit,
-    removeKnowledgeUnit
-  } = useKnowledgeUnits(knowledgeUnits, knowledgeUnitSchemas, onUpdateKnowledgeUnits);
+    removeKnowledgeUnit,
+  } = useKnowledgeUnits(
+    knowledgeUnits,
+    knowledgeUnitSchemas,
+    onUpdateKnowledgeUnits
+  );
 
   return (
-    <div className="w-96 h-full overflow-y-auto border-l border-gray-300 bg-gray-100 p-4">
-      <h2 className="text-xl font-bold mb-4 pb-2 border-b border-gray-300">Knowledge Units</h2>
+    <div className="border-GRAY_PRIMARY h-full w-96 overflow-y-auto border-l bg-gray-100 p-4">
+      <h2 className="border-GRAY_PRIMARY mb-4 border-b pb-2 text-xl font-bold">
+        Knowledge Units
+      </h2>
 
       {documentId ? (
         <>
           <div className="relative mb-4">
             <button
-              className="w-full py-2 px-4 bg-green-500 text-white rounded font-bold hover:bg-green-600 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded bg-green-500 px-4 py-2 font-bold text-white transition-colors hover:bg-green-600"
               onClick={() => setShowKuDropdown(!showKuDropdown)}
             >
               <PlusCircle size={18} />
@@ -61,13 +69,18 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
           </div>
 
           {knowledgeUnits.length === 0 ? (
-            <div className="text-gray-500 text-center p-4">
-              <p>No Knowledge Units added yet. Click "Add Knowledge Unit" to get started.</p>
+            <div className="text-GRAY_PRIMARY/500 p-4 text-center">
+              <p>
+                No Knowledge Units added yet. Click "Add Knowledge Unit" to get
+                started.
+              </p>
             </div>
           ) : (
             <div>
               {knowledgeUnits.map((ku) => {
-                const schema = knowledgeUnitSchemas.find((s) => s["Frame ID"] === ku.schemaId);
+                const schema = knowledgeUnitSchemas.find(
+                  (s) => s['Frame ID'] === ku.schemaId
+                );
                 if (!schema) return null;
 
                 return (
@@ -90,7 +103,7 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
           )}
         </>
       ) : (
-        <div className="text-gray-500 text-center p-4">
+        <div className="text-GRAY_PRIMARY/500 p-4 text-center">
           <p>Select a document to add Knowledge Units.</p>
         </div>
       )}

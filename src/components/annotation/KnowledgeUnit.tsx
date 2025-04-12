@@ -1,6 +1,11 @@
-import {FC, useState} from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { Trash2, AlertTriangle, Plus } from 'lucide-react';
-import {
+
+import { FieldInput } from './FieldInput';
+import { CustomTypeModal } from './CustomTypeModal';
+
+import type {
   KnowledgeUnitSchema,
   KnowledgeUnit as KnowledgeUnitType,
   FieldDefinition,
@@ -10,10 +15,8 @@ import {
   HighlightData,
   CustomTypeModalField,
   FieldValueType,
-  CustomTypeValue
+  CustomTypeValue,
 } from '@/types/common';
-import { FieldInput } from './FieldInput';
-import { CustomTypeModal } from './CustomTypeModal';
 import { customTypes } from '@/utils/mockData';
 
 type KnowledgeUnitProps = {
@@ -25,7 +28,7 @@ type KnowledgeUnitProps = {
   activeHighlightingField: ActiveHighlightingField;
   onAddHighlight: (highlight: HighlightData) => void;
   getFieldColor: (fieldId: string) => string;
-}
+};
 
 export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
   schema,
@@ -37,16 +40,17 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
   getFieldColor,
 }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showingOptionalFields, setShowingOptionalFields] = useState<string[]>([]);
-  const [customTypeModalField, setCustomTypeModalField] = useState<CustomTypeModalField | null>(null);
+  const [showingOptionalFields, setShowingOptionalFields] = useState<string[]>(
+    []
+  );
+  const [customTypeModalField, setCustomTypeModalField] =
+    useState<CustomTypeModalField | null>(null);
 
-  const getFieldValue = (fieldId: string): FieldValue | undefined => {
-    return knowledgeUnit.fields.find((field) => field.fieldId === fieldId);
-  };
+  const getFieldValue = (fieldId: string): FieldValue | undefined =>
+    knowledgeUnit.fields.find((field) => field.fieldId === fieldId);
 
-  const getFieldHighlights = (fieldId: string): Highlight[] => {
-    return getFieldValue(fieldId)?.highlights || [];
-  };
+  const getFieldHighlights = (fieldId: string): Highlight[] =>
+    getFieldValue(fieldId)?.highlights || [];
 
   const updateFieldValue = (fieldId: string, value: FieldValueType) => {
     const existingFieldIndex = knowledgeUnit.fields.findIndex(
@@ -124,25 +128,21 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
     setCustomTypeModalField(null);
   };
 
-  const getAvailableOptionalFields = (): FieldDefinition[] => {
-    return schema.Fields.filter(
-      (field) =>
-        !field.required &&
-        !showingOptionalFields.includes(field.id)
+  const getAvailableOptionalFields = (): FieldDefinition[] =>
+    schema.Fields.filter(
+      (field) => !field.required && !showingOptionalFields.includes(field.id)
     );
-  };
 
   const isCustomType = (type: string | string[]): boolean => {
     if (Array.isArray(type)) {
       return false;
     }
 
-    return customTypes.some((ct) => ct["type ID"] === type);
+    return customTypes.some((ct) => ct['type ID'] === type);
   };
 
-  const getCustomTypeDefinition = (typeId: string) => {
-    return customTypes.find((ct) => ct["type ID"] === typeId);
-  };
+  const getCustomTypeDefinition = (typeId: string) =>
+    customTypes.find((ct) => ct['type ID'] === typeId);
 
   const handleOpenCustomType = (fieldId: string, customTypeId: string) => {
     setCustomTypeModalField({ fieldId, customTypeId });
@@ -153,8 +153,9 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
     const fieldValue = getFieldValue(id);
     const value = fieldValue?.value || '';
     const highlights = getFieldHighlights(id);
-    const isHighlightingActive = activeHighlightingField?.fieldId === id &&
-                                activeHighlightingField?.kuId === knowledgeUnit.id;
+    const isHighlightingActive =
+      activeHighlightingField?.fieldId === id &&
+      activeHighlightingField?.kuId === knowledgeUnit.id;
     const fieldColor = getFieldColor(id);
     const isOptional = !required;
 
@@ -172,7 +173,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
             isOptional,
             fieldColor,
             isHighlightingActive,
-            onToggleHighlighting
+            onToggleHighlighting,
           }}
           key={id}
           kuId={knowledgeUnit.id}
@@ -195,7 +196,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
           isOptional,
           fieldColor,
           isHighlightingActive,
-          onToggleHighlighting
+          onToggleHighlighting,
         }}
         key={id}
         kuId={knowledgeUnit.id}
@@ -209,13 +210,13 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
   };
 
   return (
-    <div className="mb-4 rounded bg-white p-4 shadow-sm">
+    <div className="bg-WHITE_PRIMARY mb-4 rounded p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between border-b border-gray-200 pb-2">
         <div className="text-lg font-bold">{schema['Frame Label']}</div>
         <div className="flex gap-2">
           <button
             type="button"
-            className="flex cursor-pointer items-center gap-1 border-none bg-transparent text-red-500"
+            className="text-RED_PRIMARY flex cursor-pointer items-center gap-1 rounded border-none bg-transparent p-1 px-2 hover:bg-red-100"
             onClick={() => onRemove(knowledgeUnit.id)}
           >
             <Trash2 size={14} />
@@ -225,7 +226,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
       </div>
 
       {Object.keys(errors).length > 0 && (
-        <div className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-red-700">
+        <div className="text-RED_PRIMARY mb-4 rounded border border-red-200 bg-red-50 p-3">
           <p className="mb-1 flex items-center gap-1 font-bold">
             <AlertTriangle size={16} />
             Please fix the following errors:
@@ -250,7 +251,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
           <button
             type="button"
             disabled={!!activeHighlightingField}
-            className={`flex items-center gap-1 rounded border border-green-500 px-3 py-1 text-sm text-green-600 hover:bg-green-50 ${activeHighlightingField ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+            className={`flex items-center gap-1 rounded border border-green-500 px-3 py-1 text-sm text-green-600 hover:bg-green-50 ${activeHighlightingField ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
             onClick={() => {
               const availableFields = getAvailableOptionalFields();
               if (availableFields.length === 1) {

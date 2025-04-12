@@ -1,23 +1,29 @@
 import { useState } from 'react';
-import {
+
+import { getFieldColor } from '../utils/colorUtils';
+
+import type {
   Highlight,
   KnowledgeUnit,
   TextSelection,
   ActiveHighlightingField,
-  HighlightData
+  HighlightData,
 } from '@/types/common';
-import { getFieldColor } from '../utils/colorUtils';
 
 export const useHighlighting = (
   knowledgeUnits: KnowledgeUnit[],
   highlights: Highlight[],
   updateKnowledgeUnits: (updatedKUs: KnowledgeUnit[]) => void
 ) => {
-  const [activeHighlightingField, setActiveHighlightingField] = useState<ActiveHighlightingField>(null);
+  const [activeHighlightingField, setActiveHighlightingField] =
+    useState<ActiveHighlightingField>(null);
   const [activeHighlightIds, setActiveHighlightIds] = useState<string[]>([]);
 
   const toggleHighlighting = (fieldId: string, kuId: string) => {
-    if (activeHighlightingField?.fieldId === fieldId && activeHighlightingField?.kuId === kuId) {
+    if (
+      activeHighlightingField?.fieldId === fieldId &&
+      activeHighlightingField?.kuId === kuId
+    ) {
       setActiveHighlightingField(null);
     } else {
       setActiveHighlightingField({ fieldId, kuId });
@@ -127,6 +133,6 @@ export const useHighlighting = (
     toggleHighlighting,
     handleTextSelect,
     handleHighlightClick,
-    addHighlight
+    addHighlight,
   };
 };

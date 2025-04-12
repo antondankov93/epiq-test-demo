@@ -1,7 +1,14 @@
-import {FC, useState} from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { AlertTriangle, Info } from 'lucide-react';
+
 import { FieldHighlighter } from './FieldHighlighter';
-import { FieldDefinition, Highlight, FieldValueType } from '@/types/common';
+
+import type {
+  FieldDefinition,
+  Highlight,
+  FieldValueType,
+} from '@/types/common';
 import { dynamicLists } from '@/utils/mockData';
 
 type FieldInputProps = {
@@ -19,7 +26,7 @@ type FieldInputProps = {
   onClearHighlights: (fieldId: string, kuId: string) => void;
   kuId: string;
   onOpenCustomType?: (fieldId: string, customTypeId: string) => void;
-}
+};
 
 export const FieldInput: FC<FieldInputProps> = ({
   field,
@@ -44,9 +51,7 @@ export const FieldInput: FC<FieldInputProps> = ({
     const term = searchTerm.toLowerCase();
     if (!term) return options;
 
-    return options.filter((option) =>
-      option.toLowerCase().includes(term)
-    );
+    return options.filter((option) => option.toLowerCase().includes(term));
   };
 
   const resolveDynamicListType = (type: string | string[]): string[] => {
@@ -70,28 +75,31 @@ export const FieldInput: FC<FieldInputProps> = ({
   const renderInputField = () => {
     const { id, name, type } = field;
 
-    if (Array.isArray(type) && type.some(t => typeof t === 'string' && t.startsWith('DYNAMIC_'))) {
+    if (
+      Array.isArray(type) &&
+      type.some((t) => typeof t === 'string' && t.startsWith('DYNAMIC_'))
+    ) {
       const options = resolveDynamicListType(type);
 
       return (
         <div className="relative">
           <input
             type="text"
-            className="w-full p-2 border border-gray-300 rounded"
+            className="border-GRAY_PRIMARY w-full rounded border p-2"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
               setIsDropdownOpen(true);
             }}
             onFocus={() => setIsDropdownOpen(true)}
-            placeholder={value as string || `Search ${name}...`}
+            placeholder={(value as string) || `Search ${name}...`}
           />
           {isDropdownOpen && (
-            <div className="absolute top-full left-0 right-0 max-h-48 overflow-y-auto bg-white border border-gray-300 rounded-b z-10">
+            <div className="bg-WHITE_PRIMARY border-GRAY_PRIMARY absolute left-0 right-0 top-full z-10 max-h-48 overflow-y-auto rounded-b border">
               {getFilteredOptions(options).map((option) => (
                 <div
                   key={option}
-                  className="p-2 cursor-pointer hover:bg-gray-100"
+                  className="cursor-pointer p-2 hover:bg-gray-100"
                   onClick={() => {
                     onUpdateValue(option);
                     setIsDropdownOpen(false);
@@ -110,7 +118,7 @@ export const FieldInput: FC<FieldInputProps> = ({
     if (Array.isArray(type)) {
       return (
         <select
-          className="w-full p-2 border border-gray-300 rounded"
+          className="border-GRAY_PRIMARY w-full rounded border p-2"
           value={value || ''}
           onChange={(e) => onUpdateValue(e.target.value)}
         >
@@ -128,9 +136,11 @@ export const FieldInput: FC<FieldInputProps> = ({
       return (
         <input
           type="number"
-          className="w-full p-2 border border-gray-300 rounded"
-          value={value as string || ''}
-          onChange={(e) => onUpdateValue(e.target.value ? parseInt(e.target.value) : '')}
+          className="border-GRAY_PRIMARY w-full rounded border p-2"
+          value={(value as string) || ''}
+          onChange={(e) =>
+            onUpdateValue(e.target.value ? parseInt(e.target.value) : '')
+          }
         />
       );
     }
@@ -142,17 +152,16 @@ export const FieldInput: FC<FieldInputProps> = ({
           onClick={() => onOpenCustomType(id, type)}
         >
           {value ? (
-            <div className="p-2 border border-gray-300 rounded bg-gray-50">
-              {typeof value === 'object' ?
-                Object.entries(value)
-                  .filter(([_, v]) => v)
-                  .map(([k, v]) => `${k}: ${v}`)
-                  .join(', ') :
-                value
-              }
+            <div className="border-GRAY_PRIMARY bg-GRAY_PRIMARY/50 rounded border p-2">
+              {typeof value === 'object'
+                ? Object.entries(value)
+                    .filter(([_, v]) => v)
+                    .map(([k, v]) => `${k}: ${v}`)
+                    .join(', ')
+                : value}
             </div>
           ) : (
-            <button className="w-full p-2 border border-gray-300 rounded bg-gray-50 text-left">
+            <button className="border-GRAY_PRIMARY bg-GRAY_PRIMARY/50 w-full rounded border p-2 text-left">
               Set {name} Value
             </button>
           )}
@@ -163,7 +172,7 @@ export const FieldInput: FC<FieldInputProps> = ({
     return (
       <input
         type="text"
-        className="w-full p-2 border border-gray-300 rounded"
+        className="border-GRAY_PRIMARY w-full rounded border p-2"
         value={value || ''}
         onChange={(e) => onUpdateValue(e.target.value)}
       />
@@ -172,9 +181,10 @@ export const FieldInput: FC<FieldInputProps> = ({
 
   return (
     <div className="mb-3">
-      <div className="flex justify-between items-center mb-1">
+      <div className="mb-1 flex items-center justify-between">
         <div className="font-medium">
-          {field.name} {isRequired && <span className="text-red-500">*</span>}
+          {field.name}{' '}
+          {isRequired && <span className="text-RED_PRIMARY">*</span>}
         </div>
         <div className="flex items-center">
           <FieldHighlighter
@@ -191,7 +201,7 @@ export const FieldInput: FC<FieldInputProps> = ({
           {isOptional && (
             <button
               type="button"
-              className="ml-2 text-red-500"
+              className="text-RED_PRIMARY ml-2"
               onClick={onRemoveField}
             >
               ✕
@@ -200,25 +210,27 @@ export const FieldInput: FC<FieldInputProps> = ({
         </div>
       </div>
 
-      <div className={`${error ? 'border-red-300 border rounded p-2 bg-red-50' : ''}`}>
+      <div
+        className={`${error ? 'rounded border border-red-300 bg-red-50 p-2' : ''}`}
+      >
         {renderInputField()}
 
         {error && (
-          <div className="flex items-center text-red-600 text-sm mt-2">
+          <div className="text-RED_PRIMARY mt-2 flex items-center text-sm">
             <AlertTriangle size={16} className="mr-1 flex-shrink-0" />
             {error}
           </div>
         )}
 
         {isRequired && !value && !error && (
-          <div className="flex items-center text-amber-600 text-xs mt-1">
+          <div className="text-AMBER_PRIMARY mt-1 flex items-center text-xs">
             <Info size={12} className="mr-1 flex-shrink-0" />
             This field is required
           </div>
         )}
 
         {value && highlights.length === 0 && !error && (
-          <div className="flex items-center text-amber-600 text-xs mt-1">
+          <div className="text-AMBER_PRIMARY mt-1 flex items-center text-xs">
             <Info size={12} className="mr-1 flex-shrink-0" />
             Please highlight evidence for this field
           </div>

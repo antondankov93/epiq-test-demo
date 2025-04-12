@@ -1,9 +1,10 @@
+import { documents, knowledgeUnitSchemas } from './utils/mockData';
+import { useDocuments, useHighlighting } from './hooks';
+
 import { DocumentList } from '@/components/document/DocumentList';
 import { DocumentViewer } from '@/components/document/DocumentViewer';
 import { AnnotationPanel } from '@/components/annotation/AnnotationPanel';
-import { documents, knowledgeUnitSchemas } from './utils/mockData';
-import { useDocuments, useHighlighting } from './hooks';
-import './App.css';
+import './styles/index.css';
 
 function App() {
   const {
@@ -13,7 +14,7 @@ function App() {
     knowledgeUnits,
     highlights,
     selectDocument,
-    updateKnowledgeUnits
+    updateKnowledgeUnits,
   } = useDocuments(documents);
 
   const {
@@ -22,24 +23,24 @@ function App() {
     toggleHighlighting,
     handleTextSelect,
     handleHighlightClick,
-    addHighlight
+    addHighlight,
   } = useHighlighting(knowledgeUnits, highlights, updateKnowledgeUnits);
 
   return (
     <div className="flex h-screen w-screen overflow-hidden">
       <DocumentList
-          {...{
-              allDocuments,
-              selectedDocumentId
-          }}
+        {...{
+          allDocuments,
+          selectedDocumentId,
+        }}
         onSelectDocument={selectDocument}
       />
       <DocumentViewer
-          {...{
-              highlights,
-              activeHighlightIds,
-              selectedDocument
-          }}
+        {...{
+          highlights,
+          activeHighlightIds,
+          selectedDocument,
+        }}
         onTextSelect={handleTextSelect}
         onHighlightClick={handleHighlightClick}
         isHighlightingActive={!!activeHighlightingField}

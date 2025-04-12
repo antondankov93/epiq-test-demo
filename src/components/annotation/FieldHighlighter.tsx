@@ -1,16 +1,19 @@
-import {FC, useState} from 'react';
-import {Check, X, Highlighter} from 'lucide-react';
-import { Highlight } from '@/types/common';
+import type { FC } from 'react';
+import { useState } from 'react';
+import { Check, X, Highlighter } from 'lucide-react';
+
+import type { Highlight } from '@/types/common';
 
 type FieldHighlighterProps = {
   fieldId: string;
+
   kuId: string;
   highlights: Highlight[];
   color: string;
   isActive: boolean;
   onToggleHighlighting: (fieldId: string, kuId: string) => void;
   onClearHighlights: (fieldId: string, kuId: string) => void;
-}
+};
 
 export const FieldHighlighter: FC<FieldHighlighterProps> = ({
   fieldId,
@@ -25,14 +28,14 @@ export const FieldHighlighter: FC<FieldHighlighterProps> = ({
   const hasHighlights = highlights.length > 0;
 
   return (
-    <div className="flex gap-1 items-center">
+    <div className="flex items-center gap-1">
       <button
         type="button"
         className={`
-          w-6 h-6 border rounded flex items-center justify-center
-          ${isActive ? 'border-black shadow-sm' : 'border-gray-300'}
+          flex h-6 w-6 items-center justify-center rounded border
+          ${isActive ? 'border-black shadow-sm' : 'border-GRAY_PRIMARY'}
           ${hasHighlights ? 'bg-opacity-100' : 'bg-opacity-20'}
-          transition-all duration-200 hover:shadow-sm
+          transition-all duration-200 hover:cursor-pointer hover:shadow-sm
         `}
         style={{
           backgroundColor: hasHighlights ? color : 'transparent',
@@ -41,7 +44,11 @@ export const FieldHighlighter: FC<FieldHighlighterProps> = ({
         onClick={() => onToggleHighlighting(fieldId, kuId)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        title={isActive ? 'Cancel highlighting mode' : 'Highlight evidence in document'}
+        title={
+          isActive
+            ? 'Cancel highlighting mode'
+            : 'Highlight evidence in document'
+        }
         aria-pressed={isActive}
         aria-label="Toggle highlighting mode"
       >
@@ -55,7 +62,7 @@ export const FieldHighlighter: FC<FieldHighlighterProps> = ({
       {hasHighlights && (
         <button
           type="button"
-          className="text-red-500 text-xs hover:text-red-700 transition-colors"
+          className="text-RED_PRIMARY hover:text-RED_PRIMARY text-xs transition-colors hover:cursor-pointer"
           onClick={() => onClearHighlights(fieldId, kuId)}
           title="Clear all highlights for this field"
           aria-label="Clear highlights"
@@ -65,8 +72,9 @@ export const FieldHighlighter: FC<FieldHighlighterProps> = ({
       )}
 
       {hasHighlights && (
-        <span className="text-xs text-gray-500 ml-1">
-          {highlights.length} {highlights.length === 1 ? 'highlight' : 'highlights'}
+        <span className="text-GRAY_SECONDARY ml-1 text-xs">
+          {highlights.length}{' '}
+          {highlights.length === 1 ? 'highlight' : 'highlights'}
         </span>
       )}
     </div>
