@@ -6,7 +6,6 @@ import type { Highlight } from '@/types/common';
 
 type FieldHighlighterProps = {
   fieldId: string;
-
   kuId: string;
   highlights: Highlight[];
   color: string;
