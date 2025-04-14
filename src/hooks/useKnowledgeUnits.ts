@@ -14,8 +14,8 @@ export const useKnowledgeUnits = (
     if (!schema) return;
 
     const newKU: KnowledgeUnit = {
-      id: crypto.randomUUID(),
       schemaId,
+      id: crypto.randomUUID(),
       fields: [],
     };
 

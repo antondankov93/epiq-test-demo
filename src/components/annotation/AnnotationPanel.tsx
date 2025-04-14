@@ -65,6 +65,7 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
               schemas={knowledgeUnitSchemas}
               onSelect={addKnowledgeUnit}
               isOpen={showKuDropdown}
+              onClose={() => setShowKuDropdown(false)}
             />
           </div>
 

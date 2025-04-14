@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useRef, useEffect } from 'react';
 import { FileText } from 'lucide-react';
 
 import type { KnowledgeUnitSchema } from '@/types/common';
@@ -7,17 +8,43 @@ type KnowledgeUnitDropdownProps = {
   schemas: KnowledgeUnitSchema[];
   onSelect: (schemaId: string) => void;
   isOpen: boolean;
+  onClose: () => void;
 };
 
 export const KnowledgeUnitDropdown: FC<KnowledgeUnitDropdownProps> = ({
   schemas,
   onSelect,
   isOpen,
+  onClose,
 }) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div className="bg-WHITE_PRIMARY border-GRAY_PRIMARY absolute left-0 right-0 top-full z-10 rounded-b border shadow-md">
+    <div
+      ref={dropdownRef}
+      className="bg-WHITE_PRIMARY border-GRAY_PRIMARY absolute left-0 right-0 top-full z-10 rounded-b border shadow-md"
+    >
       {schemas.map((schema) => (
         <div
           key={schema['Frame ID']}
