@@ -20,6 +20,11 @@ export const useHighlighting = (
   const [activeHighlightIds, setActiveHighlightIds] = useState<string[]>([]);
 
   const toggleHighlighting = (fieldId: string, kuId: string) => {
+    if (!fieldId || !kuId) {
+      setActiveHighlightingField(null);
+      return;
+    }
+
     if (
       activeHighlightingField?.fieldId === fieldId &&
       activeHighlightingField?.kuId === kuId

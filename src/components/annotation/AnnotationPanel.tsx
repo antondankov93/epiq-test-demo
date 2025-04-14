@@ -90,12 +90,12 @@ export const AnnotationPanel: FC<AnnotationPanelProps> = ({
                       activeHighlightingField,
                       onAddHighlight,
                       getFieldColor,
+                      onToggleHighlighting,
                     }}
                     key={ku.id}
                     knowledgeUnit={ku}
                     onUpdate={updateKnowledgeUnit}
                     onRemove={removeKnowledgeUnit}
-                    onToggleHighlighting={onToggleHighlighting}
                   />
                 );
               })}

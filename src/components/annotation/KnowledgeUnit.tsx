@@ -217,7 +217,10 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
           <button
             type="button"
             className="text-RED_PRIMARY flex cursor-pointer items-center gap-1 rounded border-none bg-transparent p-1 px-2 hover:bg-red-100"
-            onClick={() => onRemove(knowledgeUnit.id)}
+            onClick={() => {
+              onToggleHighlighting('', '');
+              onRemove(knowledgeUnit.id);
+            }}
           >
             <Trash2 size={14} />
             Remove
