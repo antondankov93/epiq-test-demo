@@ -26,7 +26,7 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
 
   const handleChange = (
     fieldId: string,
-    value: string | number | boolean | null
+    value: string | number | boolean | undefined
   ) => {
     setValues((prev) => ({
       ...prev,

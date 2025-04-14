@@ -9,11 +9,10 @@ import './styles/index.css';
 function App() {
   const {
     allDocuments,
-    selectedDocumentId,
     selectedDocument,
     knowledgeUnits,
     highlights,
-    selectDocument,
+    onSelectDocument,
     updateKnowledgeUnits,
   } = useDocuments(documents);
 
@@ -31,10 +30,10 @@ function App() {
       <DocumentList
         {...{
           allDocuments,
-          selectedDocumentId,
+          selectedDocument,
+          onSelectDocument,
         }}
         isHighlightingActive={!!activeHighlightingField}
-        onSelectDocument={selectDocument}
       />
       <DocumentViewer
         {...{
@@ -52,7 +51,7 @@ function App() {
           knowledgeUnitSchemas,
           knowledgeUnits,
         }}
-        documentId={selectedDocumentId}
+        documentId={selectedDocument?.id}
         onUpdateKnowledgeUnits={updateKnowledgeUnits}
         onToggleHighlighting={toggleHighlighting}
         onAddHighlight={addHighlight}

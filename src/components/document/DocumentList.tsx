@@ -8,14 +8,14 @@ import type { Document } from '@/types/common';
 
 type DocumentListProps = {
   allDocuments: Document[];
-  selectedDocumentId: string | null;
+  selectedDocument: Document | undefined;
   onSelectDocument: (documentId: string) => void;
   isHighlightingActive: boolean;
 };
 
 export const DocumentList: FC<DocumentListProps> = ({
   allDocuments,
-  selectedDocumentId,
+  selectedDocument,
   onSelectDocument,
   isHighlightingActive,
 }) => {
@@ -61,10 +61,10 @@ export const DocumentList: FC<DocumentListProps> = ({
               id={document.id}
               title={document.title}
               hasAnnotations={document.hasAnnotations}
-              isSelected={document.id === selectedDocumentId}
+              isSelected={document.id === selectedDocument?.id}
               onSelect={onSelectDocument}
               isClickable={
-                !isHighlightingActive || document.id === selectedDocumentId
+                !isHighlightingActive || document.id === selectedDocument?.id
               }
             />
           ))}

@@ -16,12 +16,12 @@ export const useHighlighting = (
   updateKnowledgeUnits: (updatedKUs: KnowledgeUnit[]) => void
 ) => {
   const [activeHighlightingField, setActiveHighlightingField] =
-    useState<ActiveHighlightingField>(null);
+    useState<ActiveHighlightingField>(undefined);
   const [activeHighlightIds, setActiveHighlightIds] = useState<string[]>([]);
 
   const toggleHighlighting = (fieldId: string, kuId: string) => {
     if (!fieldId || !kuId) {
-      setActiveHighlightingField(null);
+      setActiveHighlightingField(undefined);
       return;
     }
 
@@ -29,7 +29,7 @@ export const useHighlighting = (
       activeHighlightingField?.fieldId === fieldId &&
       activeHighlightingField?.kuId === kuId
     ) {
-      setActiveHighlightingField(null);
+      setActiveHighlightingField(undefined);
     } else {
       setActiveHighlightingField({ fieldId, kuId });
       const fieldHighlights = highlights.filter(
@@ -45,9 +45,9 @@ export const useHighlighting = (
     const { fieldId, kuId } = activeHighlightingField;
 
     const newHighlight: Highlight = {
-      id: crypto.randomUUID(),
       fieldId,
       kuId,
+      id: crypto.randomUUID(),
       startOffset: selection.startOffset,
       endOffset: selection.endOffset,
       text: selection.text,

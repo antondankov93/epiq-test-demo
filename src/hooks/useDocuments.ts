@@ -5,18 +5,14 @@ import type { Document, KnowledgeUnit, Highlight } from '@/types/common';
 export const useDocuments = (initialDocuments: Document[]) => {
   const [allDocuments, setAllDocuments] =
     useState<Document[]>(initialDocuments);
-  const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(
-    null
-  );
-  const [selectedDocument, setSelectedDocument] = useState<Document | null>(
-    null
-  );
+  const [selectedDocument, setSelectedDocument] = useState<
+    Document | undefined
+  >(undefined);
   const [knowledgeUnits, setKnowledgeUnits] = useState<KnowledgeUnit[]>([]);
   const [highlights, setHighlights] = useState<Highlight[]>([]);
 
-  const selectDocument = (documentId: string) => {
-    setSelectedDocumentId(documentId);
-    const doc = allDocuments.find((d) => d.id === documentId) || null;
+  const onSelectDocument = (documentId: string) => {
+    const doc = allDocuments.find((d) => d.id === documentId) || undefined;
     setSelectedDocument(doc);
     setKnowledgeUnits(doc?.knowledgeUnits || []);
 
@@ -32,9 +28,9 @@ export const useDocuments = (initialDocuments: Document[]) => {
   const updateKnowledgeUnits = (updatedKUs: KnowledgeUnit[]) => {
     setKnowledgeUnits(updatedKUs);
 
-    if (selectedDocumentId) {
+    if (selectedDocument) {
       const updatedDocuments = allDocuments.map((doc) => {
-        if (doc.id === selectedDocumentId) {
+        if (doc.id === selectedDocument.id) {
           return {
             ...doc,
             knowledgeUnits: updatedKUs,
@@ -47,7 +43,7 @@ export const useDocuments = (initialDocuments: Document[]) => {
       setAllDocuments(updatedDocuments);
 
       const updatedDoc =
-        updatedDocuments.find((d) => d.id === selectedDocumentId) || null;
+        updatedDocuments.find((d) => d.id === selectedDocument.id) || undefined;
       setSelectedDocument(updatedDoc);
 
       const docHighlights: Highlight[] = [];
@@ -62,11 +58,10 @@ export const useDocuments = (initialDocuments: Document[]) => {
 
   return {
     allDocuments,
-    selectedDocumentId,
     selectedDocument,
     knowledgeUnits,
     highlights,
-    selectDocument,
+    onSelectDocument,
     updateKnowledgeUnits,
   };
 };

@@ -2,7 +2,10 @@ export type StringType = string;
 export type IntegerType = 'Integer' | 'integer';
 export type ArrayType = string[];
 
-export type CustomTypeValue = Record<string, string | number | boolean | null>;
+export type CustomTypeValue = Record<
+  string,
+  string | number | boolean | undefined
+>;
 
 export type FieldType = StringType | IntegerType | ArrayType | string;
 
@@ -36,7 +39,12 @@ export type Highlight = {
   color: string;
 };
 
-export type FieldValueType = string | number | boolean | null | CustomTypeValue;
+export type FieldValueType =
+  | string
+  | number
+  | boolean
+  | undefined
+  | CustomTypeValue;
 
 export type FieldValue = {
   fieldId: string;
@@ -69,9 +77,11 @@ export type TextSelection = {
   endOffset: number;
 };
 
-export type ActiveHighlightingField = {
-  fieldId: string;
-  kuId: string;
-} | null;
+export type ActiveHighlightingField =
+  | {
+      fieldId: string;
+      kuId: string;
+    }
+  | undefined;
 
 export type HighlightData = Omit<Highlight, 'id' | 'color'>;

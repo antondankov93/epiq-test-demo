@@ -14,7 +14,7 @@ import { useKnowledgeUnits } from '@/hooks';
 import { getFieldColor } from '@/utils/colorUtils';
 
 type AnnotationPanelProps = {
-  documentId: string | null;
+  documentId: string | undefined;
   knowledgeUnitSchemas: KnowledgeUnitSchema[];
   knowledgeUnits: KnowledgeUnitType[];
   onUpdateKnowledgeUnits: (knowledgeUnits: KnowledgeUnitType[]) => void;

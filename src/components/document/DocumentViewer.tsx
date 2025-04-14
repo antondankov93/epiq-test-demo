@@ -5,7 +5,7 @@ import { DocumentContent } from './DocumentContent';
 import type { Document, Highlight, TextSelection } from '@/types/common';
 
 type DocumentViewerProps = {
-  selectedDocument: Document | null;
+  selectedDocument: Document | undefined;
   highlights: Highlight[];
   activeHighlightIds: string[];
   onTextSelect: (selection: TextSelection) => void;

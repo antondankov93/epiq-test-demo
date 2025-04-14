@@ -43,8 +43,9 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
   const [showingOptionalFields, setShowingOptionalFields] = useState<string[]>(
     []
   );
-  const [customTypeModalField, setCustomTypeModalField] =
-    useState<CustomTypeModalField | null>(null);
+  const [customTypeModalField, setCustomTypeModalField] = useState<
+    CustomTypeModalField | undefined
+  >(undefined);
 
   const getFieldValue = (fieldId: string): FieldValue | undefined =>
     knowledgeUnit.fields.find((field) => field.fieldId === fieldId);
@@ -125,7 +126,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
     if (!customTypeModalField) return;
 
     updateFieldValue(customTypeModalField.fieldId, values);
-    setCustomTypeModalField(null);
+    setCustomTypeModalField(undefined);
   };
 
   const getAvailableOptionalFields = (): FieldDefinition[] =>
@@ -280,7 +281,7 @@ export const KnowledgeUnit: FC<KnowledgeUnitProps> = ({
             getFieldValue(customTypeModalField.fieldId)?.value || {}
           }
           onSave={handleCustomTypeSave}
-          onCancel={() => setCustomTypeModalField(null)}
+          onCancel={() => setCustomTypeModalField(undefined)}
         />
       )}
     </div>

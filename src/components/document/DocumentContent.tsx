@@ -24,7 +24,6 @@ export const DocumentContent: FC<DocumentContentProps> = ({
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!contentRef.current) return;
     const applyHighlights = () => {
       if (!contentRef.current) return;
 
