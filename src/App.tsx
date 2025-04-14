@@ -33,6 +33,7 @@ function App() {
           allDocuments,
           selectedDocumentId,
         }}
+        isHighlightingActive={!!activeHighlightingField}
         onSelectDocument={selectDocument}
       />
       <DocumentViewer

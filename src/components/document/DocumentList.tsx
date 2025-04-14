@@ -10,15 +10,17 @@ type DocumentListProps = {
   allDocuments: Document[];
   selectedDocumentId: string | null;
   onSelectDocument: (documentId: string) => void;
+  isHighlightingActive: boolean;
 };
 
 export const DocumentList: FC<DocumentListProps> = ({
   allDocuments,
   selectedDocumentId,
   onSelectDocument,
+  isHighlightingActive,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const documentsPerPage = 10;
+  const documentsPerPage = 15;
   const totalPages = Math.ceil(allDocuments.length / documentsPerPage);
 
   const sortedDocuments = [...allDocuments].sort((a, b) => {
@@ -32,13 +34,16 @@ export const DocumentList: FC<DocumentListProps> = ({
   const currentDocuments = sortedDocuments.slice(startIndex, endIndex);
 
   const handlePageChange = (newPage: number) => {
+    if (isHighlightingActive) return;
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
     }
   };
 
   return (
-    <div className="border-GRAY_PRIMARY bg-GRAY_PRIMARY/20 flex h-full w-64 flex-col overflow-hidden border-r">
+    <div
+      className={`border-GRAY_PRIMARY bg-GRAY_PRIMARY/20 flex h-full w-64 flex-col overflow-hidden border-r`}
+    >
       <div className="p-4">
         <h2 className="border-GRAY_PRIMARY mb-4 border-b pb-2 text-xl font-bold">
           Documents
@@ -58,6 +63,9 @@ export const DocumentList: FC<DocumentListProps> = ({
               hasAnnotations={document.hasAnnotations}
               isSelected={document.id === selectedDocumentId}
               onSelect={onSelectDocument}
+              isClickable={
+                !isHighlightingActive || document.id === selectedDocumentId
+              }
             />
           ))}
         </ul>
@@ -67,7 +75,7 @@ export const DocumentList: FC<DocumentListProps> = ({
         <button
           className="text-GRAY_SECONDARY hover:text-GRAY_PRIMARY disabled:text-GRAY_SECONDARY/50 flex items-center hover:cursor-pointer disabled:cursor-not-allowed"
           onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          disabled={currentPage === 1 || isHighlightingActive}
         >
           <ChevronLeft size={20} />
         </button>
@@ -77,7 +85,7 @@ export const DocumentList: FC<DocumentListProps> = ({
         <button
           className="text-GRAY_SECONDARY hover:text-GRAY_PRIMARY disabled:text-GRAY_SECONDARY/50 flex items-center hover:cursor-pointer disabled:cursor-not-allowed"
           onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || isHighlightingActive}
         >
           <ChevronRight size={20} />
         </button>
