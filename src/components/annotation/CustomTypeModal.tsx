@@ -117,7 +117,7 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="bg-BLACK_PRIMARY/20 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
       <div className="bg-WHITE_PRIMARY max-h-[90vh] w-96 max-w-[90%] overflow-y-auto rounded-lg">
         <div className="flex items-center justify-between border-b border-gray-200 p-4">
           <h3 className="text-lg font-bold">{customType['Type Label']}</h3>
@@ -143,14 +143,14 @@ export const CustomTypeModal: FC<CustomTypeModalProps> = ({
 
         <div className="flex justify-end border-t border-gray-200 p-4">
           <button
-            className="hover:bg-GRAY_PRIMARY mr-2 flex items-center gap-1 rounded bg-gray-200 px-4 py-2 transition-colors"
+            className="hover:bg-GRAY_PRIMARY mr-2 flex items-center gap-1 rounded bg-gray-200 px-4 py-2 transition-colors hover:cursor-pointer"
             onClick={onCancel}
           >
             <X size={16} />
             Cancel
           </button>
           <button
-            className="flex items-center gap-1 rounded bg-green-500 px-4 py-2 text-white transition-colors hover:bg-green-600"
+            className="text-WHITE_PRIMARY flex items-center gap-1 rounded bg-green-500 px-4 py-2 transition-colors hover:cursor-pointer hover:bg-green-600"
             onClick={handleSubmit}
           >
             <Save size={16} />

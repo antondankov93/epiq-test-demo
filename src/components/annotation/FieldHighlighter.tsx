@@ -27,14 +27,14 @@ export const FieldHighlighter: FC<FieldHighlighterProps> = ({
   const hasHighlights = highlights.length > 0;
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-2">
       <button
         type="button"
         className={`
-          flex h-6 w-6 items-center justify-center rounded border
+          flex h-8 w-8 items-center justify-center rounded border
+          transition-all duration-200 hover:cursor-pointer hover:shadow-sm
           ${isActive ? 'border-black shadow-sm' : 'border-GRAY_PRIMARY'}
           ${hasHighlights ? 'bg-opacity-100' : 'bg-opacity-20'}
-          transition-all duration-200 hover:cursor-pointer hover:shadow-sm
         `}
         style={{
           backgroundColor: hasHighlights ? color : 'transparent',
@@ -61,8 +61,11 @@ export const FieldHighlighter: FC<FieldHighlighterProps> = ({
       {hasHighlights && (
         <button
           type="button"
-          className="text-RED_PRIMARY hover:text-RED_PRIMARY text-xs transition-colors hover:cursor-pointer"
-          onClick={() => onClearHighlights(fieldId, kuId)}
+          className="text-RED_PRIMARY hover:text-RED_PRIMARY border-RED_PRIMARY rounded border p-1 text-xs transition-colors hover:cursor-pointer"
+          onClick={() => {
+            onToggleHighlighting('', '');
+            onClearHighlights(fieldId, kuId);
+          }}
           title="Clear all highlights for this field"
           aria-label="Clear highlights"
         >

@@ -16,6 +16,12 @@ export const knowledgeUnitSchemas: KnowledgeUnitSchema[] = [
         required: true,
       },
       {
+        name: 'start date',
+        id: 'start_date',
+        type: 'CUSTOM_DATE',
+        required: false,
+      },
+      {
         name: 'company',
         id: 'company',
         type: ['COMPANY_1', 'COMPANY_2', 'COMPANY_3'],

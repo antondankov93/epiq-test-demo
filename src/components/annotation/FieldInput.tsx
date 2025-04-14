@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { useState } from 'react';
-import { AlertTriangle, Info } from 'lucide-react';
+import { AlertTriangle, Info, Trash2 } from 'lucide-react';
 
 import { FieldHighlighter } from './FieldHighlighter';
 
@@ -161,8 +161,8 @@ export const FieldInput: FC<FieldInputProps> = ({
                 : value}
             </div>
           ) : (
-            <button className="border-GRAY_PRIMARY bg-GRAY_PRIMARY/50 w-full rounded border p-2 text-left">
-              Set {name} Value
+            <button className="border-GRAY_PRIMARY bg-GRAY_PRIMARY/50 w-full rounded border p-2 text-left hover:cursor-pointer">
+              Set value
             </button>
           )}
         </div>
@@ -186,34 +186,34 @@ export const FieldInput: FC<FieldInputProps> = ({
           {field.name}{' '}
           {isRequired && <span className="text-RED_PRIMARY">*</span>}
         </div>
-        <div className="flex items-center">
-          <FieldHighlighter
-            {...{
-              kuId,
-              highlights,
-              onToggleHighlighting,
-              onClearHighlights,
-            }}
-            fieldId={field.id}
-            color={fieldColor}
-            isActive={isHighlightingActive}
-          />
-          {isOptional && (
-            <button
-              type="button"
-              className="text-RED_PRIMARY ml-2"
-              onClick={onRemoveField}
-            >
-              ✕
-            </button>
-          )}
-        </div>
+        <FieldHighlighter
+          {...{
+            kuId,
+            highlights,
+            onToggleHighlighting,
+            onClearHighlights,
+          }}
+          fieldId={field.id}
+          color={fieldColor}
+          isActive={isHighlightingActive}
+        />
       </div>
 
       <div
         className={`${error ? 'rounded border border-red-300 bg-red-50 p-2' : ''}`}
       >
-        {renderInputField()}
+        <div className="relative flex items-center">
+          <div className="flex-grow">{renderInputField()}</div>
+          {isOptional && (
+            <button
+              type="button"
+              className="text-RED_PRIMARY ml-2 flex h-8 w-8 items-center justify-center rounded border border-red-300 hover:cursor-pointer"
+              onClick={onRemoveField}
+            >
+              <Trash2 size={18} />
+            </button>
+          )}
+        </div>
 
         {error && (
           <div className="text-RED_PRIMARY mt-2 flex items-center text-sm">
